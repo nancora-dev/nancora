@@ -1,4 +1,7 @@
-"""Dataset profiling. Cheap dataset-level evidence for candidate generation — not a full EDA dump."""
+"""Dataset profiling.
+
+Cheap dataset-level evidence for candidate generation — not a full EDA dump.
+"""
 
 from __future__ import annotations
 

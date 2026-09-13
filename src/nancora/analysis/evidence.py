@@ -42,7 +42,10 @@ def insight_for(candidate: AnalysisCandidate) -> str:
             f"median={stats.get('median')}). This is a distribution summary, not a causal finding."
         )
     if aid == "categorical_distribution":
-        return f"{vars_} is categorical with {stats.get('n_levels')} observed levels (top={stats.get('top_level')})."
+        return (
+            f"{vars_} is categorical with {stats.get('n_levels')} observed levels "
+            f"(top={stats.get('top_level')})."
+        )
     if aid == "numeric_relationship":
         r = stats.get("coefficient")
         return (
@@ -50,10 +53,12 @@ def insight_for(candidate: AnalysisCandidate) -> str:
             "Association is not causation."
         )
     if aid == "categorical_numeric":
+        g_name = candidate.variables[0] if candidate.variables else "groups"
+        v_name = candidate.variables[-1] if candidate.variables else vars_
         return (
-            f"Group comparison of {candidate.variables[-1] if candidate.variables else vars_} "
-            f"across {candidate.variables[0] if candidate.variables else 'groups'} "
-            f"({stats.get('method')} statistic={stats.get('statistic')}). Association is not causation."
+            f"Group comparison of {v_name} across {g_name} "
+            f"({stats.get('method')} statistic={stats.get('statistic')}). "
+            "Association is not causation."
         )
     if aid == "datetime_numeric_trend":
         return (
@@ -67,11 +72,17 @@ def insight_for(candidate: AnalysisCandidate) -> str:
             "Correlation is not causation."
         )
     if aid == "outlier_analysis":
-        return f"IQR outlier screen on {vars_}: {stats.get('n_outliers')} flagged points (heuristic fence, not a model)."
+        return (
+            f"IQR outlier screen on {vars_}: {stats.get('n_outliers')} flagged points "
+            "(heuristic fence, not a model)."
+        )
     if aid == "missingness_analysis":
         return f"Missingness overview: {stats.get('n_columns_with_missing')} columns have missing values."
     if aid == "cardinality_analysis":
-        return f"Cardinality of {vars_}: {stats.get('n_unique')} unique values (ratio={stats.get('unique_ratio')})."
+        return (
+            f"Cardinality of {vars_}: {stats.get('n_unique')} unique values "
+            f"(ratio={stats.get('unique_ratio')})."
+        )
     if aid == "target_aware":
         return (
             f"Target-aware view for {vars_}. Ranking favors target-linked questions; "
