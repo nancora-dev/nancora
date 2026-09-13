@@ -18,8 +18,9 @@ def test_relationship_insight_mentions_not_causation():
 
 
 def test_explain_decision():
-    import nancora as nc
     from tests.conftest import mixed_frame
+
+    import nancora as nc
 
     res = nc.explore(mixed_frame(), max_analyses=5)
     exp = res.explain(0)
