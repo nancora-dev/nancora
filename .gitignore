@@ -1,5 +1,7 @@
 .venv/
+.venv*/
 venv/
+scratch/
 __pycache__/
 *.py[cod]
 *.egg-info/
@@ -12,3 +14,4 @@ build/
 htmlcov/
 *.png
 .DS_Store
+
