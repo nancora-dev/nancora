@@ -106,6 +106,35 @@ class AnalysisResult:
             "runtime_seconds": self.timings.get("runtime_seconds"),
         }
 
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "nancora_result_version": RESULT_SCHEMA_VERSION,
+            "summary": self.summary(),
+            "profile": self.dataset_profile.to_dict(),
+            "recommendations": [c.to_dict() for c in self.selected],
+            "rejected": [c.to_dict() for c in self.rejected],
+            "insights": list(self.insights),
+            "context": self.context.to_dict(),
+            "timings": self.timings,
+        }
+
+    def to_json(self, indent: int | None = None) -> str:
+        return json.dumps(self.to_dict(), indent=indent)
+
+    def save(self, path: str | Path) -> Path:
+        from nancora.report.html import write_html
+
+        return write_html(self, path)
+
+    def visualize(self, backend: str = "matplotlib") -> list[Any]:
+        if self.frame is None:
+            return []
+        figures = []
+        for cand in self.selected:
+            if cand.viz is not None:
+                figures.append(render_plot(self.frame, cand.viz, backend=backend))
+        return figures
+
     def _repr_html_(self) -> str:
         target_str = (
             f" • Target: <strong>{self.context.target}</strong>" if self.context.target else ""

@@ -19,6 +19,13 @@ class AnalysisContext:
     max_analyses: int = 10
     rng_seed: int = 0
 
+    def to_dict(self) -> dict[str, Any]:
+        return {
+            "target": self.target,
+            "max_analyses": self.max_analyses,
+            "rng_seed": self.rng_seed,
+        }
+
 
 @dataclass
 class AnalysisRequirements:
