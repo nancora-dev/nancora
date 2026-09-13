@@ -27,8 +27,11 @@ def validate_draft(
     if context.target and req.needs_target and context.target not in draft.variables:
         reasons.append("target_not_in_variables")
     for name in draft.variables:
-        if profile.column(name) is None:
+        col = profile.column(name)
+        if col is None:
             reasons.append(f"unknown_column:{name}")
+        elif req.column_kinds and col.kind not in req.column_kinds:
+            reasons.append(f"invalid_kind:{name}:{col.kind.value}")
     if reasons:
         candidate.status = AnalysisStatus.INVALID
         candidate.reject_reason = RejectReason.INVALID_REQUIREMENTS
