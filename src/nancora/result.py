@@ -17,6 +17,11 @@ from nancora.plot import render as render_plot
 from nancora.types import RESULT_SCHEMA_VERSION
 
 
+class CallableList(list):
+    def __call__(self) -> CallableList:
+        return self
+
+
 @dataclass
 class AnalysisResult:
     dataset_profile: DatasetProfile
@@ -26,31 +31,47 @@ class AnalysisResult:
     timings: dict[str, float] = field(default_factory=dict)
     frame: pd.DataFrame | None = field(default=None, repr=False, compare=False)
 
-    def summary(self) -> dict[str, Any]:
-        return {
-            "n_rows": self.dataset_profile.n_rows,
-            "n_cols": self.dataset_profile.n_cols,
-            "target": self.context.target,
-            "n_selected": len(self.selected),
-            "n_rejected": len(self.rejected),
-            "top_scores": [
-                {"analysis_id": c.analysis_id, "variables": list(c.variables), "score": c.score}
-                for c in self.selected[:5]
-            ],
-            "runtime_seconds": self.timings.get("runtime_seconds"),
-        }
-
+    @property
     def profile(self) -> DatasetProfile:
         return self.dataset_profile
 
-    def recommendations(self) -> list[AnalysisCandidate]:
-        return list(self.selected)
+    @property
+    def recommendations(self) -> CallableList[AnalysisCandidate]:
+        return CallableList(self.selected)
 
-    def insights(self) -> list[str]:
-        return [insight_for(c) for c in self.selected]
+    @property
+    def insights(self) -> CallableList[str]:
+        return CallableList(insight_for(c) for c in self.selected)
 
-    def rejected_candidates(self) -> list[AnalysisCandidate]:
-        return list(self.rejected)
+    @property
+    def rejected_candidates(self) -> CallableList[AnalysisCandidate]:
+        return CallableList(self.rejected)
+
+    @property
+    def visualizations(self) -> CallableList[Any]:
+        if self.frame is None:
+            return CallableList()
+        figures = []
+        for cand in self.selected:
+            if cand.viz is not None:
+                figures.append(render_plot(self.frame, cand.viz, backend="matplotlib"))
+        return CallableList(figures)
+
+    @property
+    def decision_trace(self) -> dict[str, Any]:
+        return {
+            "summary": self.summary(),
+            "selected": [self.explain(c.analysis_id) for c in self.selected],
+            "rejected": [
+                {
+                    "analysis_id": r.analysis_id,
+                    "variables": list(r.variables),
+                    "reason": r.reject_reason.value if r.reject_reason else r.status.value,
+                    "explanation": r.explanation,
+                }
+                for r in self.rejected
+            ],
+        }
 
     def explain(self, target: int | str = 0) -> dict[str, Any]:
         from nancora.engine.explain import explain_decision
@@ -71,42 +92,113 @@ class AnalysisResult:
         return explain_decision(cand, self.rejected)
 
 
-    def visualize(self, backend: str = "matplotlib"):
-        if self.frame is None:
-            raise ReportError("No DataFrame attached; cannot visualize.")
-        figures = []
-        for cand in self.selected:
-            if cand.viz is None:
-                continue
-            figures.append(render_plot(self.frame, cand.viz, backend=backend))
-        return figures
-
-    def to_dict(self) -> dict[str, Any]:
+    def summary(self) -> dict[str, Any]:
         return {
-            "nancora_result_version": RESULT_SCHEMA_VERSION,
-            "summary": self.summary(),
-            "profile": self.dataset_profile.to_dict(),
-            "recommendations": [c.to_dict() for c in self.selected],
-            "rejected": [c.to_dict() for c in self.rejected],
-            "insights": self.insights(),
-            "context": {
-                "target": self.context.target,
-                "max_analyses": self.context.max_analyses,
-                "rng_seed": self.context.rng_seed,
-            },
-            "timings": dict(self.timings),
+            "n_rows": self.dataset_profile.n_rows,
+            "n_cols": self.dataset_profile.n_cols,
+            "target": self.context.target,
+            "n_selected": len(self.selected),
+            "n_rejected": len(self.rejected),
+            "top_scores": [
+                {"analysis_id": c.analysis_id, "variables": list(c.variables), "score": c.score}
+                for c in self.selected[:5]
+            ],
+            "runtime_seconds": self.timings.get("runtime_seconds"),
         }
 
-    def to_json(self, *, indent: int = 2) -> str:
-        return json.dumps(self.to_dict(), indent=indent, sort_keys=True, default=str)
+    def _repr_html_(self) -> str:
+        target_str = (
+            f" • Target: <strong>{self.context.target}</strong>" if self.context.target else ""
+        )
+        rec_rows = []
+        for i, c in enumerate(self.selected, 1):
+            score_val = c.score or 0.0
+            score_color = (
+                "#10b981" if score_val >= 70 else "#f59e0b" if score_val >= 50 else "#6b7280"
+            )
+            vars_str = ", ".join(c.variables)
+            evidence_str = ""
+            if c.evidence and c.evidence.notes:
+                evidence_str = (
+                    f"<br/><small style='color:#6b7280;'>Evidence: {c.evidence.notes[0]}</small>"
+                )
+            rec_rows.append(
+                f"""
+                <tr style="border-bottom: 1px solid #e5e7eb;">
+                    <td style="padding: 8px; font-weight: 600; text-align: center; color: #374151;">#{i}</td>
+                    <td style="padding: 8px;">
+                        <strong style="color: #111827;">{c.analysis_id}</strong>
+                        <span style="color: #6b7280; font-size: 0.85em;"> ({vars_str})</span>
+                        <div style="color: #4b5563; font-size: 0.85em; margin-top: 2px;">{c.intent}</div>
+                        {evidence_str}
+                    </td>
+                    <td style="padding: 8px; text-align: right; vertical-align: top;">
+                        <span style="background-color: {score_color}; color: white; padding: 2px 7px; border-radius: 10px; font-weight: 600; font-size: 0.8em;">
+                            {score_val:.1f}
+                        </span>
+                    </td>
+                </tr>
+                """
+            )
+        insight_items = "".join(
+            f"<li style='margin-bottom: 3px;'>{insight}</li>" for insight in self.insights
+        )
+        rejected_rows = []
+        for r in self.rejected:
+            reason = r.reject_reason.value if r.reject_reason else r.status.value
+            vars_str = ", ".join(r.variables)
+            rejected_rows.append(
+                f"<li><code>{r.analysis_id}</code> ({vars_str}) &mdash; <span style='color:#ef4444;'>{reason}</span></li>"
+            )
+        rejected_html = ""
+        if rejected_rows:
+            rejected_html = f"""
+            <details style="margin-top: 12px; color: #4b5563; font-size: 0.85em;">
+                <summary style="cursor: pointer; font-weight: 600; color: #374151;">
+                    Skipped / Redundant Analyses ({len(self.rejected)})
+                </summary>
+                <ul style="margin-top: 6px; padding-left: 18px;">
+                    {"".join(rejected_rows)}
+                </ul>
+            </details>
+            """
+        return f"""
+        <div style="font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; border: 1px solid #e5e7eb; border-radius: 8px; padding: 14px; background-color: #ffffff; max-width: 780px; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #3b82f6; padding-bottom: 6px; margin-bottom: 10px;">
+                <div>
+                    <h3 style="margin: 0; color: #1e3a8a; font-size: 1.15em;">Nancora Exploration Result</h3>
+                    <div style="color: #6b7280; font-size: 0.8em; margin-top: 2px;">
+                        Rows: <strong>{self.dataset_profile.n_rows}</strong> • Columns: <strong>{self.dataset_profile.n_cols}</strong>{target_str}
+                    </div>
+                </div>
+                <div style="background: #dbeafe; color: #1e40af; padding: 3px 8px; border-radius: 10px; font-weight: 600; font-size: 0.75em;">
+                    {len(self.selected)} Recommendations
+                </div>
+            </div>
+            <div style="margin-bottom: 12px;">
+                <h4 style="margin: 0 0 6px 0; color: #1f2937; font-size: 0.95em;">Prioritized Recommendations</h4>
+                <table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 0.85em;">
+                    <thead>
+                        <tr style="background-color: #f9fafb; color: #4b5563; border-bottom: 1px solid #e5e7eb;">
+                            <th style="padding: 5px 8px; width: 35px; text-align: center;">Rank</th>
+                            <th style="padding: 5px 8px;">Analysis Direction</th>
+                            <th style="padding: 5px 8px; text-align: right; width: 60px;">Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {"".join(rec_rows)}
+                    </tbody>
+                </table>
+            </div>
+            <div style="background-color: #f8fafc; border-left: 3px solid #3b82f6; padding: 8px 12px; margin-bottom: 10px; border-radius: 0 4px 4px 0;">
+                <h4 style="margin: 0 0 4px 0; color: #1e293b; font-size: 0.9em;">Key Analytical Insights</h4>
+                <ul style="margin: 0; padding-left: 16px; color: #334155; font-size: 0.85em;">
+                    {insight_items}
+                </ul>
+            </div>
+            {rejected_html}
+        </div>
+        """
 
-    def save(self, path: str | Path) -> Path:
-        dest = Path(path)
-        if dest.suffix.lower() == ".json":
-            dest.write_text(self.to_json(), encoding="utf-8")
-            return dest
-        if dest.suffix.lower() in {".html", ".htm"}:
-            from nancora.report.html import write_html
 
-            return write_html(self, dest)
-        raise ReportError(f"Unsupported save suffix: {dest.suffix}")
+ExplorationResult = AnalysisResult
