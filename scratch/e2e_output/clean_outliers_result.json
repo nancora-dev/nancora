@@ -1,0 +1,1516 @@
+{
+  "nancora_result_version": "1",
+  "summary": {
+    "n_rows": 100,
+    "n_cols": 3,
+    "target": null,
+    "n_selected": 10,
+    "n_rejected": 4,
+    "top_scores": [
+      {
+        "analysis_id": "correlation_analysis",
+        "variables": [
+          "anomalous",
+          "y",
+          "x"
+        ],
+        "score": 95.9
+      },
+      {
+        "analysis_id": "numeric_relationship",
+        "variables": [
+          "x",
+          "y"
+        ],
+        "score": 94.9
+      },
+      {
+        "analysis_id": "numeric_relationship",
+        "variables": [
+          "anomalous",
+          "x"
+        ],
+        "score": 75.0
+      },
+      {
+        "analysis_id": "outlier_analysis",
+        "variables": [
+          "anomalous"
+        ],
+        "score": 72.7
+      },
+      {
+        "analysis_id": "numeric_relationship",
+        "variables": [
+          "anomalous",
+          "y"
+        ],
+        "score": 71.8
+      }
+    ],
+    "runtime_seconds": 0.016001
+  },
+  "profile": {
+    "n_rows": 100,
+    "n_cols": 3,
+    "columns": [
+      {
+        "name": "x",
+        "kind": "numeric",
+        "n_unique": 100,
+        "missing_rate": 0.0,
+        "inferred_role": "feature",
+        "n_non_null": 100,
+        "variance": 8.587559092609597
+      },
+      {
+        "name": "y",
+        "kind": "numeric",
+        "n_unique": 100,
+        "missing_rate": 0.0,
+        "inferred_role": "feature",
+        "n_non_null": 100,
+        "variance": 34.79332984051333
+      },
+      {
+        "name": "anomalous",
+        "kind": "numeric",
+        "n_unique": 100,
+        "missing_rate": 0.0,
+        "inferred_role": "feature",
+        "n_non_null": 100,
+        "variance": 123.89579430373036
+      }
+    ],
+    "kind_counts": {
+      "numeric": 3
+    },
+    "high_cardinality": [
+      "x",
+      "y",
+      "anomalous"
+    ],
+    "top_missing": [],
+    "target": null
+  },
+  "recommendations": [
+    {
+      "analysis_id": "correlation_analysis",
+      "analysis_type": "multivariate",
+      "intent": "Summarize Pearson correlations among numeric columns",
+      "variables": [
+        "anomalous",
+        "y",
+        "x"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 32,
+        "needs_target": false
+      },
+      "family": "correlation_matrix",
+      "complexity": 2.5,
+      "evidence": {
+        "stats": {
+          "n_columns": 3,
+          "strongest_pair": [
+            "y",
+            "x"
+          ],
+          "strongest_abs": 0.997038,
+          "strongest_r": 0.997038
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "pearson_corr"
+        },
+        "notes": [
+          "Correlation is not causation."
+        ]
+      },
+      "score": 95.9,
+      "coverage": 6.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 64.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +17.9\nInformation value: +5.0\nData quality: +6.0\nCoverage: +6.0\nComplexity: -3.0\nFinal score: 95.9",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 64.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 17.9,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -3.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 95.9,
+        "trace": "Base relevance: 64.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +17.9\nInformation value: +5.0\nData quality: +6.0\nCoverage: +6.0\nComplexity: -3.0\nFinal score: 95.9"
+      },
+      "viz": {
+        "kind": "heatmap",
+        "title": "Numeric correlation matrix",
+        "x": null,
+        "y": null,
+        "color": null,
+        "extra": {
+          "columns": [
+            "anomalous",
+            "y",
+            "x"
+          ]
+        }
+      }
+    },
+    {
+      "analysis_id": "numeric_relationship",
+      "analysis_type": "bivariate",
+      "intent": "Measure association between two numeric columns",
+      "variables": [
+        "x",
+        "y"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "numeric_pair",
+      "complexity": 2.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "coefficient": 0.997038,
+          "p_value": 5.374626284234835e-111,
+          "p_value_display": "< 1e-12",
+          "method": "pearson",
+          "library": "scipy.stats"
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "pearson"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 94.9,
+      "coverage": 4.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +19.9\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.0\nFinal score: 94.9",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 62.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 19.9,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 4.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 94.9,
+        "trace": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +19.9\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.0\nFinal score: 94.9"
+      },
+      "viz": {
+        "kind": "scatter",
+        "title": "x vs y",
+        "x": "x",
+        "y": "y",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_relationship",
+      "analysis_type": "bivariate",
+      "intent": "Measure association between two numeric columns",
+      "variables": [
+        "anomalous",
+        "x"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "numeric_pair",
+      "complexity": 2.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "coefficient": 0.098673,
+          "p_value": 0.3287146343130726,
+          "p_value_display": "0.3287",
+          "method": "pearson",
+          "library": "scipy.stats"
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "pearson"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 75.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +2.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.0\nFinal score: 75.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 62.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 75.0,
+        "trace": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +2.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.0\nFinal score: 75.0"
+      },
+      "viz": {
+        "kind": "scatter",
+        "title": "anomalous vs x",
+        "x": "anomalous",
+        "y": "x",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "outlier_analysis",
+      "analysis_type": "univariate",
+      "intent": "Flag IQR outliers on a numeric column",
+      "variables": [
+        "anomalous"
+      ],
+      "requirements": {
+        "min_rows": 8,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "outlier_numeric",
+      "complexity": 1.4,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 0.6866,
+          "std": 11.130849,
+          "min": -50.0,
+          "max": 60.0,
+          "median": 0.136416,
+          "n_outliers": 5,
+          "outlier_rate": 0.05
+        },
+        "provenance": {
+          "library": "numpy",
+          "method": "iqr_1.5"
+        },
+        "notes": [
+          "IQR fences are a heuristic, not a generative outlier model."
+        ]
+      },
+      "score": 72.7,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +6.5\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.8\nFinal score: 72.7",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 54.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 6.5,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.8,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 72.7,
+        "trace": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +6.5\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.8\nFinal score: 72.7"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Outlier screen: anomalous",
+        "x": "anomalous",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_relationship",
+      "analysis_type": "bivariate",
+      "intent": "Measure association between two numeric columns",
+      "variables": [
+        "anomalous",
+        "y"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "numeric_pair",
+      "complexity": 2.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "coefficient": 0.091546,
+          "p_value": 0.365012890547963,
+          "p_value_display": "0.3650",
+          "method": "pearson",
+          "library": "scipy.stats"
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "pearson"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 71.8,
+      "coverage": -1.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +1.8\nInformation value: +5.0\nData quality: +6.0\nCoverage: -1.0\nComplexity: -2.0\nFinal score: 71.8",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 62.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 1.8,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": -1.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 71.8,
+        "trace": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +1.8\nInformation value: +5.0\nData quality: +6.0\nCoverage: -1.0\nComplexity: -2.0\nFinal score: 71.8"
+      },
+      "viz": {
+        "kind": "scatter",
+        "title": "anomalous vs y",
+        "x": "anomalous",
+        "y": "y",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_distribution",
+      "analysis_type": "univariate",
+      "intent": "Describe the distribution of a numeric column",
+      "variables": [
+        "anomalous"
+      ],
+      "requirements": {
+        "min_rows": 3,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "univariate_numeric",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 0.6866,
+          "std": 11.130849,
+          "min": -50.0,
+          "max": 60.0,
+          "median": 0.136416,
+          "skew": 1.628352
+        },
+        "provenance": {
+          "library": "numpy/pandas",
+          "method": "descriptive_univariate"
+        },
+        "notes": [
+          "Descriptive summary only."
+        ]
+      },
+      "score": 71.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 58.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 71.0,
+        "trace": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Distribution of anomalous",
+        "x": "anomalous",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_distribution",
+      "analysis_type": "univariate",
+      "intent": "Describe the distribution of a numeric column",
+      "variables": [
+        "x"
+      ],
+      "requirements": {
+        "min_rows": 3,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "univariate_numeric",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 5.0,
+          "std": 2.930454,
+          "min": 0.0,
+          "max": 10.0,
+          "median": 5.0,
+          "skew": -0.0
+        },
+        "provenance": {
+          "library": "numpy/pandas",
+          "method": "descriptive_univariate"
+        },
+        "notes": [
+          "Descriptive summary only."
+        ]
+      },
+      "score": 71.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 58.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 71.0,
+        "trace": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Distribution of x",
+        "x": "x",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_distribution",
+      "analysis_type": "univariate",
+      "intent": "Describe the distribution of a numeric column",
+      "variables": [
+        "y"
+      ],
+      "requirements": {
+        "min_rows": 3,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "univariate_numeric",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 9.948077,
+          "std": 5.898587,
+          "min": 0.132888,
+          "max": 19.882706,
+          "median": 10.067,
+          "skew": 0.011491
+        },
+        "provenance": {
+          "library": "numpy/pandas",
+          "method": "descriptive_univariate"
+        },
+        "notes": [
+          "Descriptive summary only."
+        ]
+      },
+      "score": 71.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 58.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 71.0,
+        "trace": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Distribution of y",
+        "x": "y",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "cardinality_analysis",
+      "analysis_type": "univariate",
+      "intent": "Measure uniqueness of a column",
+      "variables": [
+        "anomalous"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "cardinality",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_unique": 100,
+          "unique_ratio": 1.0,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "nunique"
+        },
+        "notes": [
+          "High uniqueness may indicate an identifier."
+        ]
+      },
+      "score": 54.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 54.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": -4.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 54.0,
+        "trace": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 54.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Cardinality of anomalous",
+        "x": "anomalous",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "cardinality_analysis",
+      "analysis_type": "univariate",
+      "intent": "Measure uniqueness of a column",
+      "variables": [
+        "x"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "cardinality",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_unique": 100,
+          "unique_ratio": 1.0,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "nunique"
+        },
+        "notes": [
+          "High uniqueness may indicate an identifier."
+        ]
+      },
+      "score": 54.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 54.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": -4.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 54.0,
+        "trace": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 54.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Cardinality of x",
+        "x": "x",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "analysis_id": "outlier_analysis",
+      "analysis_type": "univariate",
+      "intent": "Flag IQR outliers on a numeric column",
+      "variables": [
+        "x"
+      ],
+      "requirements": {
+        "min_rows": 8,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "outlier_numeric",
+      "complexity": 1.4,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 5.0,
+          "std": 2.930454,
+          "min": 0.0,
+          "max": 10.0,
+          "median": 5.0,
+          "n_outliers": 0,
+          "outlier_rate": 0.0
+        },
+        "provenance": {
+          "library": "numpy",
+          "method": "iqr_1.5"
+        },
+        "notes": [
+          "IQR fences are a heuristic, not a generative outlier model."
+        ]
+      },
+      "score": 54.2,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "similar_analysis",
+        "kept": {
+          "analysis_id": "numeric_distribution",
+          "variables": [
+            "x"
+          ]
+        }
+      },
+      "status": "rejected",
+      "reject_reason": "similar_analysis",
+      "explanation": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2\nRejected (similar_analysis); kept numeric_distribution ['x']",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 54.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": -10.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.8,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 54.2,
+        "trace": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Outlier screen: x",
+        "x": "x",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "outlier_analysis",
+      "analysis_type": "univariate",
+      "intent": "Flag IQR outliers on a numeric column",
+      "variables": [
+        "y"
+      ],
+      "requirements": {
+        "min_rows": 8,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "outlier_numeric",
+      "complexity": 1.4,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 9.948077,
+          "std": 5.898587,
+          "min": 0.132888,
+          "max": 19.882706,
+          "median": 10.067,
+          "n_outliers": 0,
+          "outlier_rate": 0.0
+        },
+        "provenance": {
+          "library": "numpy",
+          "method": "iqr_1.5"
+        },
+        "notes": [
+          "IQR fences are a heuristic, not a generative outlier model."
+        ]
+      },
+      "score": 54.2,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "similar_analysis",
+        "kept": {
+          "analysis_id": "numeric_distribution",
+          "variables": [
+            "y"
+          ]
+        }
+      },
+      "status": "rejected",
+      "reject_reason": "similar_analysis",
+      "explanation": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2\nRejected (similar_analysis); kept numeric_distribution ['y']",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 54.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": -10.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.8,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 54.2,
+        "trace": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Outlier screen: y",
+        "x": "y",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "cardinality_analysis",
+      "analysis_type": "univariate",
+      "intent": "Measure uniqueness of a column",
+      "variables": [
+        "y"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "cardinality",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_unique": 100,
+          "unique_ratio": 1.0,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "nunique"
+        },
+        "notes": [
+          "High uniqueness may indicate an identifier."
+        ]
+      },
+      "score": 52.0,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 52.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": -4.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 52.0,
+        "trace": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 52.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Cardinality of y",
+        "x": "y",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "missingness_analysis",
+      "analysis_type": "dataset",
+      "intent": "Summarize missing values across columns",
+      "variables": [
+        "x",
+        "y",
+        "anomalous"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 10000,
+        "needs_target": false
+      },
+      "family": "data_quality",
+      "complexity": 1.1,
+      "evidence": {
+        "stats": {
+          "n_columns_with_missing": 0,
+          "cell_missing_rate": 0.0,
+          "worst_column": "x",
+          "worst_rate": 0.0
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "isna.mean"
+        },
+        "notes": [
+          "Missingness is a data-quality observation, not an imputation."
+        ]
+      },
+      "score": 35.8,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -25.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.2\nFinal score: 35.8",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": -25.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.2,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 35.8,
+        "trace": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -25.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.2\nFinal score: 35.8"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Missingness (top columns shown in report tables)",
+        "x": "x",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    }
+  ],
+  "insights": [
+    "Pearson correlation structure among 3 numeric columns. Correlation is not causation.",
+    "Association between x, y: pearson coefficient=0.997038, p=< 1e-12. Association is not causation.",
+    "Association between anomalous, x: pearson coefficient=0.098673, p=0.3287. Association is not causation.",
+    "IQR outlier screen on anomalous: 5 flagged points (heuristic fence, not a model).",
+    "Association between anomalous, y: pearson coefficient=0.091546, p=0.3650. Association is not causation.",
+    "anomalous is numeric (n=100.0, mean=0.6866, median=0.136416). This is a distribution summary, not a causal finding.",
+    "x is numeric (n=100.0, mean=5.0, median=5.0). This is a distribution summary, not a causal finding.",
+    "y is numeric (n=100.0, mean=9.948077, median=10.067). This is a distribution summary, not a causal finding.",
+    "Cardinality of anomalous: 100 unique values (ratio=1.0).",
+    "Cardinality of x: 100 unique values (ratio=1.0)."
+  ],
+  "context": {
+    "target": null,
+    "max_analyses": 10,
+    "rng_seed": 0
+  },
+  "timings": {
+    "runtime_seconds": 0.016001
+  }
+}

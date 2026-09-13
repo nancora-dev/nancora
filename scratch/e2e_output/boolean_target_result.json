@@ -1,0 +1,2246 @@
+{
+  "nancora_result_version": "1",
+  "summary": {
+    "n_rows": 100,
+    "n_cols": 4,
+    "target": "churned",
+    "n_selected": 10,
+    "n_rejected": 11,
+    "top_scores": [
+      {
+        "analysis_id": "target_aware",
+        "variables": [
+          "churned",
+          "monthly_charges"
+        ],
+        "score": 100.0
+      },
+      {
+        "analysis_id": "target_aware",
+        "variables": [
+          "churned",
+          "tenure_months"
+        ],
+        "score": 100.0
+      },
+      {
+        "analysis_id": "target_aware",
+        "variables": [
+          "plan_type",
+          "churned"
+        ],
+        "score": 96.8
+      },
+      {
+        "analysis_id": "numeric_relationship",
+        "variables": [
+          "monthly_charges",
+          "tenure_months"
+        ],
+        "score": 88.9
+      },
+      {
+        "analysis_id": "categorical_numeric",
+        "variables": [
+          "plan_type",
+          "monthly_charges"
+        ],
+        "score": 88.6
+      }
+    ],
+    "runtime_seconds": 0.0324
+  },
+  "profile": {
+    "n_rows": 100,
+    "n_cols": 4,
+    "columns": [
+      {
+        "name": "churned",
+        "kind": "boolean",
+        "n_unique": 2,
+        "missing_rate": 0.0,
+        "inferred_role": "target",
+        "n_non_null": 100,
+        "variance": null
+      },
+      {
+        "name": "monthly_charges",
+        "kind": "numeric",
+        "n_unique": 100,
+        "missing_rate": 0.0,
+        "inferred_role": "feature",
+        "n_non_null": 100,
+        "variance": 577.648615720315
+      },
+      {
+        "name": "tenure_months",
+        "kind": "numeric",
+        "n_unique": 100,
+        "missing_rate": 0.0,
+        "inferred_role": "feature",
+        "n_non_null": 100,
+        "variance": 319.56267487141963
+      },
+      {
+        "name": "plan_type",
+        "kind": "categorical",
+        "n_unique": 4,
+        "missing_rate": 0.0,
+        "inferred_role": "feature",
+        "n_non_null": 100,
+        "variance": null
+      }
+    ],
+    "kind_counts": {
+      "boolean": 1,
+      "numeric": 2,
+      "categorical": 1
+    },
+    "high_cardinality": [
+      "monthly_charges",
+      "tenure_months"
+    ],
+    "top_missing": [],
+    "target": "churned"
+  },
+  "recommendations": [
+    {
+      "analysis_id": "target_aware",
+      "analysis_type": "target",
+      "intent": "Numeric feature comparison across target groups",
+      "variables": [
+        "churned",
+        "monthly_charges"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 2,
+        "needs_target": true
+      },
+      "family": "target_cat_num",
+      "complexity": 2.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "coefficient": 0.824368,
+          "p_value": 5.850453039725667e-26,
+          "p_value_display": "< 1e-12",
+          "method": "pearson",
+          "library": "scipy.stats"
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "pearson"
+        },
+        "notes": [
+          "Association with the target is not causation and not a fitted model."
+        ]
+      },
+      "score": 100.0,
+      "coverage": 4.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.5\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.0\nFinal score: 100.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 72.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 16.5,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 4.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 100.0,
+        "trace": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.5\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.0\nFinal score: 100.0"
+      },
+      "viz": {
+        "kind": "box",
+        "title": "monthly_charges by target churned",
+        "x": "churned",
+        "y": "monthly_charges",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "target_aware",
+      "analysis_type": "target",
+      "intent": "Numeric feature comparison across target groups",
+      "variables": [
+        "churned",
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 2,
+        "needs_target": true
+      },
+      "family": "target_cat_num",
+      "complexity": 2.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "coefficient": -0.806295,
+          "p_value": 4.455727104720699e-24,
+          "p_value_display": "< 1e-12",
+          "method": "pearson",
+          "library": "scipy.stats"
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "pearson"
+        },
+        "notes": [
+          "Association with the target is not causation and not a fitted model."
+        ]
+      },
+      "score": 100.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.1\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.0\nFinal score: 100.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 72.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 16.1,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 100.0,
+        "trace": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.1\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.0\nFinal score: 100.0"
+      },
+      "viz": {
+        "kind": "box",
+        "title": "tenure_months by target churned",
+        "x": "churned",
+        "y": "tenure_months",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "target_aware",
+      "analysis_type": "target",
+      "intent": "Categorical association with target",
+      "variables": [
+        "plan_type",
+        "churned"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 2,
+        "needs_target": true
+      },
+      "family": "target_cat_cat",
+      "complexity": 2.1,
+      "evidence": {
+        "stats": {
+          "statistic": null,
+          "p_value": 0.0,
+          "p_value_display": "< 1e-12",
+          "n_groups": 4.0,
+          "method": "f_oneway",
+          "library": "scipy.stats",
+          "note": "Association test, not a causal claim."
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "f_oneway"
+        },
+        "notes": [
+          "Association with the target is not causation and not a fitted model."
+        ]
+      },
+      "score": 96.8,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.2\nFinal score: 96.8",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 72.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.2,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 96.8,
+        "trace": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.2\nFinal score: 96.8"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "plan_type by target churned",
+        "x": "plan_type",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_relationship",
+      "analysis_type": "bivariate",
+      "intent": "Measure association between two numeric columns",
+      "variables": [
+        "monthly_charges",
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "numeric_pair",
+      "complexity": 2.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "coefficient": -0.693614,
+          "p_value": 1.2549625200860654e-15,
+          "p_value_display": "< 1e-12",
+          "method": "pearson",
+          "library": "scipy.stats"
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "pearson"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 88.9,
+      "coverage": 4.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +13.9\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.0\nFinal score: 88.9",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 62.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 13.9,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 4.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 88.9,
+        "trace": "Base relevance: 62.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +13.9\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.0\nFinal score: 88.9"
+      },
+      "viz": {
+        "kind": "scatter",
+        "title": "monthly_charges vs tenure_months",
+        "x": "monthly_charges",
+        "y": "tenure_months",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "categorical_numeric",
+      "analysis_type": "bivariate",
+      "intent": "Compare a numeric column across categorical groups",
+      "variables": [
+        "plan_type",
+        "monthly_charges"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "categorical",
+          "boolean",
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "cat_num_pair",
+      "complexity": 2.2,
+      "evidence": {
+        "stats": {
+          "statistic": 70.844766,
+          "p_value": 3.019603208402584e-24,
+          "p_value_display": "< 1e-12",
+          "n_groups": 4.0,
+          "method": "f_oneway",
+          "library": "scipy.stats",
+          "note": "Association test, not a causal claim."
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "f_oneway"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 88.6,
+      "coverage": 4.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 60.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.4\nFinal score: 88.6",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 60.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 16.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 4.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.4,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 88.6,
+        "trace": "Base relevance: 60.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -2.4\nFinal score: 88.6"
+      },
+      "viz": {
+        "kind": "box",
+        "title": "monthly_charges by plan_type",
+        "x": "plan_type",
+        "y": "monthly_charges",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "correlation_analysis",
+      "analysis_type": "multivariate",
+      "intent": "Summarize Pearson correlations among numeric columns",
+      "variables": [
+        "monthly_charges",
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 32,
+        "needs_target": false
+      },
+      "family": "correlation_matrix",
+      "complexity": 2.5,
+      "evidence": {
+        "stats": {
+          "n_columns": 2,
+          "strongest_pair": [
+            "monthly_charges",
+            "tenure_months"
+          ],
+          "strongest_abs": 0.693614,
+          "strongest_r": -0.693614
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "pearson_corr"
+        },
+        "notes": [
+          "Correlation is not causation."
+        ]
+      },
+      "score": 88.5,
+      "coverage": 4.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 64.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +12.5\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -3.0\nFinal score: 88.5",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 64.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 12.5,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 4.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -3.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 88.5,
+        "trace": "Base relevance: 64.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +12.5\nInformation value: +5.0\nData quality: +6.0\nCoverage: +4.0\nComplexity: -3.0\nFinal score: 88.5"
+      },
+      "viz": {
+        "kind": "heatmap",
+        "title": "Numeric correlation matrix",
+        "x": null,
+        "y": null,
+        "color": null,
+        "extra": {
+          "columns": [
+            "monthly_charges",
+            "tenure_months"
+          ]
+        }
+      }
+    },
+    {
+      "analysis_id": "categorical_numeric",
+      "analysis_type": "bivariate",
+      "intent": "Compare a numeric column across categorical groups",
+      "variables": [
+        "plan_type",
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "categorical",
+          "boolean",
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "cat_num_pair",
+      "complexity": 2.2,
+      "evidence": {
+        "stats": {
+          "statistic": 63.466897,
+          "p_value": 1.0574851707612536e-22,
+          "p_value_display": "< 1e-12",
+          "n_groups": 4.0,
+          "method": "f_oneway",
+          "library": "scipy.stats",
+          "note": "Association test, not a causal claim."
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "f_oneway"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 86.6,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 60.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.4\nFinal score: 86.6",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 60.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 16.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.4,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 86.6,
+        "trace": "Base relevance: 60.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -2.4\nFinal score: 86.6"
+      },
+      "viz": {
+        "kind": "box",
+        "title": "tenure_months by plan_type",
+        "x": "plan_type",
+        "y": "tenure_months",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "categorical_distribution",
+      "analysis_type": "univariate",
+      "intent": "Describe the distribution of a categorical column",
+      "variables": [
+        "churned"
+      ],
+      "requirements": {
+        "min_rows": 3,
+        "column_kinds": [
+          "categorical",
+          "boolean"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "univariate_categorical",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_levels": 2,
+          "top_level": "False",
+          "top_count": 64,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "value_counts"
+        },
+        "notes": [
+          "Level frequencies only."
+        ]
+      },
+      "score": 83.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 56.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 83.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 56.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 83.0,
+        "trace": "Base relevance: 56.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 83.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Counts of churned",
+        "x": "churned",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "cardinality_analysis",
+      "analysis_type": "univariate",
+      "intent": "Measure uniqueness of a column",
+      "variables": [
+        "churned"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "cardinality",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_unique": 2,
+          "unique_ratio": 0.02,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "nunique"
+        },
+        "notes": [
+          "High uniqueness may indicate an identifier."
+        ]
+      },
+      "score": 77.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 50.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 77.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 77.0,
+        "trace": "Base relevance: 50.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 77.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Cardinality of churned",
+        "x": "churned",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_distribution",
+      "analysis_type": "univariate",
+      "intent": "Describe the distribution of a numeric column",
+      "variables": [
+        "monthly_charges"
+      ],
+      "requirements": {
+        "min_rows": 3,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "univariate_numeric",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 57.615208,
+          "std": 24.034322,
+          "min": 7.458607,
+          "max": 108.743294,
+          "median": 53.2294,
+          "skew": 0.232754
+        },
+        "provenance": {
+          "library": "numpy/pandas",
+          "method": "descriptive_univariate"
+        },
+        "notes": [
+          "Descriptive summary only."
+        ]
+      },
+      "score": 71.0,
+      "coverage": 2.0,
+      "redundancy": {},
+      "status": "selected",
+      "reject_reason": null,
+      "explanation": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 58.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 2.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 71.0,
+        "trace": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +2.0\nComplexity: -0.0\nFinal score: 71.0"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Distribution of monthly_charges",
+        "x": "monthly_charges",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    }
+  ],
+  "rejected": [
+    {
+      "analysis_id": "categorical_numeric",
+      "analysis_type": "bivariate",
+      "intent": "Compare a numeric column across categorical groups",
+      "variables": [
+        "churned",
+        "monthly_charges"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "categorical",
+          "boolean",
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "cat_num_pair",
+      "complexity": 2.2,
+      "evidence": {
+        "stats": {
+          "statistic": 207.850661,
+          "p_value": 5.850453039725529e-26,
+          "p_value_display": "< 1e-12",
+          "n_groups": 2.0,
+          "method": "f_oneway",
+          "library": "scipy.stats",
+          "note": "Association test, not a causal claim."
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "f_oneway"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 98.6,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "similar_analysis",
+        "kept": {
+          "analysis_id": "target_aware",
+          "variables": [
+            "churned",
+            "monthly_charges"
+          ]
+        }
+      },
+      "status": "rejected",
+      "reject_reason": "similar_analysis",
+      "explanation": "Base relevance: 60.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -2.4\nFinal score: 98.6\nRejected (similar_analysis); kept target_aware ['churned', 'monthly_charges']",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 60.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 16.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.4,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 98.6,
+        "trace": "Base relevance: 60.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -2.4\nFinal score: 98.6"
+      },
+      "viz": {
+        "kind": "box",
+        "title": "monthly_charges by churned",
+        "x": "churned",
+        "y": "monthly_charges",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "categorical_numeric",
+      "analysis_type": "bivariate",
+      "intent": "Compare a numeric column across categorical groups",
+      "variables": [
+        "churned",
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [
+          "categorical",
+          "boolean",
+          "numeric"
+        ],
+        "min_variables": 2,
+        "max_variables": 2,
+        "needs_target": false
+      },
+      "family": "cat_num_pair",
+      "complexity": 2.2,
+      "evidence": {
+        "stats": {
+          "statistic": 182.089922,
+          "p_value": 4.455727104720991e-24,
+          "p_value_display": "< 1e-12",
+          "n_groups": 2.0,
+          "method": "f_oneway",
+          "library": "scipy.stats",
+          "note": "Association test, not a causal claim."
+        },
+        "provenance": {
+          "library": "scipy.stats",
+          "method": "f_oneway"
+        },
+        "notes": [
+          "Association is not causation."
+        ]
+      },
+      "score": 98.6,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "similar_analysis",
+        "kept": {
+          "analysis_id": "target_aware",
+          "variables": [
+            "churned",
+            "tenure_months"
+          ]
+        }
+      },
+      "status": "rejected",
+      "reject_reason": "similar_analysis",
+      "explanation": "Base relevance: 60.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -2.4\nFinal score: 98.6\nRejected (similar_analysis); kept target_aware ['churned', 'tenure_months']",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 60.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 16.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -2.4,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 98.6,
+        "trace": "Base relevance: 60.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +16.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -2.4\nFinal score: 98.6"
+      },
+      "viz": {
+        "kind": "box",
+        "title": "tenure_months by churned",
+        "x": "churned",
+        "y": "tenure_months",
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "target_aware",
+      "analysis_type": "target",
+      "intent": "Describe the target column",
+      "variables": [
+        "churned"
+      ],
+      "requirements": {
+        "min_rows": 5,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 2,
+        "needs_target": true
+      },
+      "family": "target_univariate",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 0.36,
+          "std": 0.482418,
+          "min": 0.0,
+          "max": 1.0,
+          "median": 0.0
+        },
+        "provenance": {
+          "library": "pandas/numpy",
+          "method": "target_univariate"
+        },
+        "notes": [
+          "Target description only; not a predictive model."
+        ]
+      },
+      "score": 97.0,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "dominated",
+        "kept": {
+          "analysis_id": "target_aware",
+          "variables": [
+            "churned",
+            "monthly_charges"
+          ]
+        }
+      },
+      "status": "rejected",
+      "reject_reason": "dominated",
+      "explanation": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 97.0\nRejected (dominated); kept target_aware ['churned', 'monthly_charges']",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 72.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 97.0,
+        "trace": "Base relevance: 72.0\nTarget proximity: +14.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 97.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Target distribution: churned",
+        "x": "churned",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "numeric_distribution",
+      "analysis_type": "univariate",
+      "intent": "Describe the distribution of a numeric column",
+      "variables": [
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 3,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "univariate_numeric",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 24.447776,
+          "std": 17.876316,
+          "min": -1.978054,
+          "max": 61.862874,
+          "median": 23.218405,
+          "skew": 0.277936
+        },
+        "provenance": {
+          "library": "numpy/pandas",
+          "method": "descriptive_univariate"
+        },
+        "notes": [
+          "Descriptive summary only."
+        ]
+      },
+      "score": 69.0,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 69.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 58.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 69.0,
+        "trace": "Base relevance: 58.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 69.0"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Distribution of tenure_months",
+        "x": "tenure_months",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "categorical_distribution",
+      "analysis_type": "univariate",
+      "intent": "Describe the distribution of a categorical column",
+      "variables": [
+        "plan_type"
+      ],
+      "requirements": {
+        "min_rows": 3,
+        "column_kinds": [
+          "categorical",
+          "boolean"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "univariate_categorical",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_levels": 4,
+          "top_level": "Pro",
+          "top_count": 37,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "value_counts"
+        },
+        "notes": [
+          "Level frequencies only."
+        ]
+      },
+      "score": 67.0,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 56.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 67.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 56.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 67.0,
+        "trace": "Base relevance: 56.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 67.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Counts of plan_type",
+        "x": "plan_type",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "cardinality_analysis",
+      "analysis_type": "univariate",
+      "intent": "Measure uniqueness of a column",
+      "variables": [
+        "plan_type"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "cardinality",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_unique": 4,
+          "unique_ratio": 0.04,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "nunique"
+        },
+        "notes": [
+          "High uniqueness may indicate an identifier."
+        ]
+      },
+      "score": 61.0,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 61.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 61.0,
+        "trace": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 61.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Cardinality of plan_type",
+        "x": "plan_type",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "outlier_analysis",
+      "analysis_type": "univariate",
+      "intent": "Flag IQR outliers on a numeric column",
+      "variables": [
+        "monthly_charges"
+      ],
+      "requirements": {
+        "min_rows": 8,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "outlier_numeric",
+      "complexity": 1.4,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 57.615208,
+          "std": 24.034322,
+          "min": 7.458607,
+          "max": 108.743294,
+          "median": 53.2294,
+          "n_outliers": 0,
+          "outlier_rate": 0.0
+        },
+        "provenance": {
+          "library": "numpy",
+          "method": "iqr_1.5"
+        },
+        "notes": [
+          "IQR fences are a heuristic, not a generative outlier model."
+        ]
+      },
+      "score": 54.2,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "similar_analysis",
+        "kept": {
+          "analysis_id": "numeric_distribution",
+          "variables": [
+            "monthly_charges"
+          ]
+        }
+      },
+      "status": "rejected",
+      "reject_reason": "similar_analysis",
+      "explanation": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2\nRejected (similar_analysis); kept numeric_distribution ['monthly_charges']",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 54.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": -10.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.8,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 54.2,
+        "trace": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Outlier screen: monthly_charges",
+        "x": "monthly_charges",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "outlier_analysis",
+      "analysis_type": "univariate",
+      "intent": "Flag IQR outliers on a numeric column",
+      "variables": [
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 8,
+        "column_kinds": [
+          "numeric"
+        ],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "outlier_numeric",
+      "complexity": 1.4,
+      "evidence": {
+        "stats": {
+          "n": 100.0,
+          "mean": 24.447776,
+          "std": 17.876316,
+          "min": -1.978054,
+          "max": 61.862874,
+          "median": 23.218405,
+          "n_outliers": 0,
+          "outlier_rate": 0.0
+        },
+        "provenance": {
+          "library": "numpy",
+          "method": "iqr_1.5"
+        },
+        "notes": [
+          "IQR fences are a heuristic, not a generative outlier model."
+        ]
+      },
+      "score": 54.2,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "similar_analysis",
+        "kept": {
+          "analysis_id": "numeric_distribution",
+          "variables": [
+            "tenure_months"
+          ]
+        }
+      },
+      "status": "rejected",
+      "reject_reason": "similar_analysis",
+      "explanation": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2\nRejected (similar_analysis); kept numeric_distribution ['tenure_months']",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 54.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": -10.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.8,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 54.2,
+        "trace": "Base relevance: 54.0\nTarget proximity: +0.0\nRelationship / Evidence strength: -10.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.8\nFinal score: 54.2"
+      },
+      "viz": {
+        "kind": "hist",
+        "title": "Outlier screen: tenure_months",
+        "x": "tenure_months",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "cardinality_analysis",
+      "analysis_type": "univariate",
+      "intent": "Measure uniqueness of a column",
+      "variables": [
+        "monthly_charges"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "cardinality",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_unique": 100,
+          "unique_ratio": 1.0,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "nunique"
+        },
+        "notes": [
+          "High uniqueness may indicate an identifier."
+        ]
+      },
+      "score": 52.0,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 52.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": -4.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 52.0,
+        "trace": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 52.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Cardinality of monthly_charges",
+        "x": "monthly_charges",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "cardinality_analysis",
+      "analysis_type": "univariate",
+      "intent": "Measure uniqueness of a column",
+      "variables": [
+        "tenure_months"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 1,
+        "needs_target": false
+      },
+      "family": "cardinality",
+      "complexity": 1.0,
+      "evidence": {
+        "stats": {
+          "n_unique": 100,
+          "unique_ratio": 1.0,
+          "n": 100
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "nunique"
+        },
+        "notes": [
+          "High uniqueness may indicate an identifier."
+        ]
+      },
+      "score": 52.0,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 52.0",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": -4.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.0,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 52.0,
+        "trace": "Base relevance: 50.0\nTarget proximity: +0.0\nRelationship / Evidence strength: +0.0\nInformation value: -4.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.0\nFinal score: 52.0"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Cardinality of tenure_months",
+        "x": "tenure_months",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    },
+    {
+      "analysis_id": "missingness_analysis",
+      "analysis_type": "dataset",
+      "intent": "Summarize missing values across columns",
+      "variables": [
+        "churned",
+        "monthly_charges",
+        "tenure_months",
+        "plan_type"
+      ],
+      "requirements": {
+        "min_rows": 1,
+        "column_kinds": [],
+        "min_variables": 1,
+        "max_variables": 10000,
+        "needs_target": false
+      },
+      "family": "data_quality",
+      "complexity": 1.1,
+      "evidence": {
+        "stats": {
+          "n_columns_with_missing": 0,
+          "cell_missing_rate": 0.0,
+          "worst_column": "churned",
+          "worst_rate": 0.0
+        },
+        "provenance": {
+          "library": "pandas",
+          "method": "isna.mean"
+        },
+        "notes": [
+          "Missingness is a data-quality observation, not an imputation."
+        ]
+      },
+      "score": 49.8,
+      "coverage": 0.0,
+      "redundancy": {
+        "reason": "below_rank_cutoff"
+      },
+      "status": "rejected",
+      "reject_reason": "below_rank_cutoff",
+      "explanation": "Base relevance: 50.0\nTarget proximity: +14.0\nRelationship / Evidence strength: -25.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.2\nFinal score: 49.8",
+      "breakdown": {
+        "items": [
+          {
+            "name": "Base relevance",
+            "delta": 50.0,
+            "signed": false,
+            "note": "Heuristic prior for this analysis type"
+          },
+          {
+            "name": "Target proximity",
+            "delta": 14.0,
+            "signed": true,
+            "note": "Boost if the target is involved"
+          },
+          {
+            "name": "Relationship / Evidence strength",
+            "delta": -25.0,
+            "signed": true,
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence"
+          },
+          {
+            "name": "Information value",
+            "delta": 5.0,
+            "signed": true,
+            "note": "Non-degeneracy / sample support"
+          },
+          {
+            "name": "Data quality",
+            "delta": 6.0,
+            "signed": true,
+            "note": "Sample size and missingness"
+          },
+          {
+            "name": "Coverage",
+            "delta": 0.0,
+            "signed": true,
+            "note": "Filled at selection time"
+          },
+          {
+            "name": "Complexity",
+            "delta": -0.2,
+            "signed": true,
+            "note": "Pairwise analyses cost a small penalty"
+          }
+        ],
+        "final": 49.8,
+        "trace": "Base relevance: 50.0\nTarget proximity: +14.0\nRelationship / Evidence strength: -25.0\nInformation value: +5.0\nData quality: +6.0\nCoverage: +0.0\nComplexity: -0.2\nFinal score: 49.8"
+      },
+      "viz": {
+        "kind": "bar",
+        "title": "Missingness (top columns shown in report tables)",
+        "x": "churned",
+        "y": null,
+        "color": null,
+        "extra": {}
+      }
+    }
+  ],
+  "insights": [
+    "Target-aware view for churned, monthly_charges (p=< 1e-12). Ranking favors target-linked questions; this is not a predictive model.",
+    "Target-aware view for churned, tenure_months (p=< 1e-12). Ranking favors target-linked questions; this is not a predictive model.",
+    "Target-aware view for plan_type, churned (p=< 1e-12). Ranking favors target-linked questions; this is not a predictive model.",
+    "Association between monthly_charges, tenure_months: pearson coefficient=-0.693614, p=< 1e-12. Association is not causation.",
+    "Group comparison of monthly_charges across plan_type (f_oneway statistic=70.844766, p=< 1e-12). Association is not causation.",
+    "Pearson correlation structure among 2 numeric columns. Correlation is not causation.",
+    "Group comparison of tenure_months across plan_type (f_oneway statistic=63.466897, p=< 1e-12). Association is not causation.",
+    "churned is categorical with 2 observed levels (top=False).",
+    "Cardinality of churned: 2 unique values (ratio=0.02).",
+    "monthly_charges is numeric (n=100.0, mean=57.615208, median=53.2294). This is a distribution summary, not a causal finding."
+  ],
+  "context": {
+    "target": "churned",
+    "max_analyses": 10,
+    "rng_seed": 0
+  },
+  "timings": {
+    "runtime_seconds": 0.0324
+  }
+}
