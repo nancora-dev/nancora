@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from typing import cast
+
 import pandas as pd
 
 from nancora.analysis.base import (
@@ -50,7 +52,7 @@ class NumericDistribution(Analysis):
         name = candidate.variables[0]
         stats = nan_aware_stats(df[name])
         sk_val = pd.to_numeric(df[name], errors="coerce").skew(skipna=True)
-        stats["skew"] = float(sk_val) if pd.notna(sk_val) else 0.0
+        stats["skew"] = float(cast(float, sk_val)) if pd.notna(sk_val) else 0.0
         return Evidence(
             stats=stats,
             provenance={"library": "numpy/pandas", "method": "descriptive_univariate"},
