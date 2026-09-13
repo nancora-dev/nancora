@@ -12,7 +12,6 @@ import pandas as pd
 from nancora.analysis.base import AnalysisCandidate, AnalysisContext
 from nancora.analysis.evidence import insight_for
 from nancora.data.profile import DatasetProfile
-from nancora.exceptions import ReportError
 from nancora.plot import render as render_plot
 from nancora.types import RESULT_SCHEMA_VERSION
 

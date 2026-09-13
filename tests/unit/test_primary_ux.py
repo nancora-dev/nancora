@@ -1,8 +1,11 @@
 import json
 from pathlib import Path
+
 import pandas as pd
+
 import nancora as nc
-from nancora.result import ExplorationResult, CallableList
+from nancora.result import CallableList, ExplorationResult
+
 
 def sample_df():
     return pd.DataFrame({

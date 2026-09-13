@@ -8,20 +8,29 @@ It does not reimplement Pandas, NumPy, SciPy, Matplotlib, or Plotly. Those libra
 import nancora as nc
 
 df = nc.read_csv("data.csv")
+
+# 1. Unsupervised exploration
 result = nc.explore(df)
-result.summary()
-result.recommendations()
-result.insights()
-result.visualize()
+
+# 2. Target-aware exploration
+result = nc.explore(df, target="target_column")
+
+# Jupyter Notebook Experience: Simply evaluate `result` for clean, rich HTML rendering!
+
+# 3. Clean structured properties
+result.profile          # Dataset shape, column kinds, quality stats
+result.recommendations  # Prioritized list of top analytical recommendations
+result.insights         # Human-readable insights from key evidence
+result.visualizations   # Matplotlib figures for top recommendations
+result.decision_trace   # Complete explanation of selected & skipped analyses
+
+# 4. Useful serialization
+result.to_dict()
+result.to_json()
 result.save("report.html")
 ```
 
-Target-aware path:
-
-```python
-result = nc.analyze(df, target="y", max_analyses=10)
-```
-
+Nancora follows a strict philosophy: **SELECT → PRIORITIZE → EXPLAIN → VISUALIZE** (not flood the user with unnecessary charts).
 Scores are ranking heuristics (0–100), not scientific truth. Association is not causation.
 
 ## Install
