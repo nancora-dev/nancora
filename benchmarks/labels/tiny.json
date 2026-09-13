@@ -1,30 +1,30 @@
 {
-  "dataset_id": "synthetic_linear",
-  "description": "Linear relationship benchmark dataset",
+  "dataset_id": "tiny",
+  "description": "Tiny business benchmark dataset",
   "labels": [
     {
       "analysis_id": "numeric_relationship",
-      "variables": ["x", "y"],
+      "variables": ["revenue", "spend"],
       "kind": "essential"
     },
     {
       "analysis_id": "correlation_analysis",
-      "variables": ["noise", "x", "y"],
+      "variables": ["noise", "revenue", "spend"],
       "kind": "essential"
     },
     {
       "analysis_id": "categorical_numeric",
-      "variables": ["group", "x"],
+      "variables": ["region", "spend"],
       "kind": "useful"
     },
     {
       "analysis_id": "numeric_distribution",
-      "variables": ["x"],
+      "variables": ["spend"],
       "kind": "useful"
     },
     {
       "analysis_id": "missingness_analysis",
-      "variables": ["x", "y", "noise", "group"],
+      "variables": ["spend", "revenue", "noise", "region"],
       "kind": "useful"
     }
   ]
