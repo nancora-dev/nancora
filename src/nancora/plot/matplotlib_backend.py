@@ -24,7 +24,7 @@ def render_matplotlib(df: pd.DataFrame, spec: PlotSpec):
         ax.set_ylabel("count")
     elif kind == "bar" and spec.x:
         counts = df[spec.x].astype("string").value_counts().head(20)
-        ax.bar(counts.index.astype(str), counts.values, color="#3b6ea5")
+        ax.bar(counts.index.astype(str), list(counts.values), color="#3b6ea5")
         ax.tick_params(axis="x", rotation=45)
         ax.set_ylabel("count")
     elif kind == "scatter" and spec.x and spec.y:

@@ -19,8 +19,8 @@ def round_number(value, digits: int = 6):
     return value
 
 
-def sanitize_stats(stats: dict) -> dict:
-    out = {}
+def sanitize_stats(stats: dict[str, Any]) -> dict[str, Any]:
+    out: dict[str, Any] = {}
     for key, val in stats.items():
         if isinstance(val, dict):
             out[key] = sanitize_stats(val)
