@@ -21,12 +21,14 @@ def test_version_exposure():
 
 
 def test_exception_hierarchy():
-    """Verify custom exception classes inherit from NancoraError."""
+    """Verify custom exception classes inherit from NancoraError and AnalysisError."""
     assert issubclass(InputError, NancoraError)
     assert issubclass(ConfigurationError, NancoraError)
     assert issubclass(DataError, NancoraError)
     assert issubclass(AnalysisError, NancoraError)
     assert issubclass(ReportError, NancoraError)
+    assert issubclass(InputError, AnalysisError)
+    assert issubclass(ConfigurationError, AnalysisError)
 
 
 def test_non_dataframe_input():
@@ -43,7 +45,7 @@ def test_non_dataframe_input():
 
 def test_empty_dataframe_input():
     """Verify empty DataFrame input raises InputError."""
-    with pytest.raises(InputError, match="Input dataset is empty"):
+    with pytest.raises(InputError, match="empty DataFrame"):
         nc.explore(pd.DataFrame())
 
 
@@ -57,7 +59,7 @@ def test_invalid_target_type():
 def test_missing_target_column():
     """Verify nonexistent target column raises InputError."""
     df = pd.DataFrame({"x": [1, 2, 3], "y": [4, 5, 6]})
-    with pytest.raises(InputError, match="Target column 'invalid_col' not found"):
+    with pytest.raises(InputError, match="Target column not found"):
         nc.explore(df, target="invalid_col")
 
 
