@@ -1,13 +1,5 @@
 # Target analysis
 
-```python
-result = nc.analyze(df, target="y")
-```
+`nc.analyze(df, target="y")` marks the column as target in the profile, enables `target_aware` proposals, and boosts candidates that include the target.
 
-`target_aware` proposes:
-
-- target distribution
-- target vs numeric features
-- target vs categorical features
-
-Target membership also boosts heuristic relevance for any candidate that includes the target column.
+This is not a predictive model and not AutoML.

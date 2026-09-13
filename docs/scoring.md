@@ -1,16 +1,7 @@
 # Scoring
 
-Conceptual (heuristic):
+Conceptual mix: relevance + relationship strength + information value + data quality + coverage − complexity.
 
-relevance + relationship strength + information value + data quality + coverage − redundancy − complexity
+Normalized to 0–100. Documented as a **ranking heuristic**. Each candidate stores a decision trace (`ScoreBreakdown.format_trace()`).
 
-Normalized to 0–100 and clamped. Every selected candidate stores a decision trace, for example:
-
-```
-Base relevance: 82
-Relationship strength: +14
-...
-Final score: 94.2
-```
-
-This is **not** a scientifically universal quality score.
+Weights live in `src/nancora/engine/score.py` (`BASE_RELEVANCE` and helper functions). Do not describe scores as scientifically universal.

@@ -1,11 +1,10 @@
 # Limitations
 
-- **Heuristic scores.** The 0–100 ranking is for attention, not a universal scientific quality metric.
-- **No causal claims.** Correlation, group differences, and time associations are descriptive.
-- **Pairwise caps.** Wide tables do not enumerate every column pair. See `MAX_PAIRS` / `max_pairs`.
-- **Not AutoML.** Nancora does not train production models or tune pipelines.
-- **IQR outliers.** Tukey flags depend on distribution shape; they are not proof of error.
-- **Datetime trends.** Time association uses a simple ordinal/Pearson helper; it is not a forecasting model.
-- **Excel/Parquet** require optional extras.
-- **Interactive Plotly** is for notebooks; HTML reports embed static Matplotlib PNGs when a frame is available.
-- **Benchmark metrics** are computed only when human labels exist. Empty labels produce no scores.
+- Ranking scores are **heuristics** (0–100). They are not a universal measure of scientific quality.
+- Pairwise analyses are **capped** (`PAIRWISE_CAP`) so wide tables do not explode combinatorially. Some real relationships will not be proposed.
+- Correlation, ANOVA-style group tests, and time-ordinal Spearman statistics are **associations**. They are not causal effects and not forecasts.
+- IQR outlier flags are a fence heuristic, not a contamination model.
+- Schema kinds use dtype plus cardinality heuristics; integer codes may be labeled categorical or numeric incorrectly.
+- HTML reports embed static Matplotlib images. Plotly is for interactive `visualize(backend="plotly")`.
+- The benchmark runner does **not** ship claimed leaderboard numbers. Empty labels mean metrics are skipped.
+- Nancora is not AutoML, not a database, not a cloud product, and not an LLM assistant.

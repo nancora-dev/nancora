@@ -1,0 +1,5 @@
+{
+  "dataset_id": "synthetic_linear",
+  "description": "Label schema example. Populate kinds only with human judgment; do not invent scores.",
+  "labels": []
+}

@@ -2,5 +2,4 @@
 
 ## 0.1.0
 
-- Initial MVP: profile → candidates → evidence → heuristic scoring → redundancy → ranking
-- Ten builtin analyses, HTML reports, CLI, benchmark framework without fabricated scores
+- Initial MVP: explore/analyze pipeline, ten builtin analyses, HTML reports, CLI, tests, benchmark harness without fabricated scores.

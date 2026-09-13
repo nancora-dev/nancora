@@ -1,77 +1,69 @@
-"""Command-line interface around explore/analyze."""
+"""Command-line entry point. Thin wrapper over explore/analyze."""
 
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
 
 import typer
 
 from nancora.data.io import read_csv, read_excel, read_json, read_parquet
-from nancora.engine import run_pipeline
-from nancora.result import AnalysisResult
+from nancora.engine import analyze, explore
 
-app = typer.Typer(add_completion=False, no_args_is_help=True, help="Nancora: recommend analyses worth attention.")
+app = typer.Typer(help="Nancora: recommend analyses worth attention.")
 
 
 def _load(path: Path):
     suffix = path.suffix.lower()
-    if suffix in {".csv", ".txt"}:
+    if suffix == ".csv":
         return read_csv(path)
-    if suffix in {".xlsx", ".xls"}:
-        return read_excel(path)
     if suffix == ".json":
         return read_json(path)
-    if suffix == ".parquet":
+    if suffix in {".xlsx", ".xls"}:
+        return read_excel(path)
+    if suffix in {".parquet", ".pq"}:
         return read_parquet(path)
     raise typer.BadParameter(f"Unsupported file type: {suffix}")
 
 
-@app.command()
-def explore(
+@app.command("explore")
+def explore_cmd(
     path: Path = typer.Argument(..., exists=True, readable=True),
-    target: Optional[str] = typer.Option(None, help="Optional target column."),
-    max_analyses: int = typer.Option(10, help="Maximum selected analyses."),
-    out: Optional[Path] = typer.Option(None, help="Write HTML or JSON report."),
-    json_out: bool = typer.Option(False, "--json", help="Print JSON to stdout."),
+    max_analyses: int = typer.Option(10, "--max-analyses"),
+    out: Path | None = typer.Option(None, "--out", help="Write HTML or JSON report"),
+    json_out: bool = typer.Option(False, "--json", help="Print JSON to stdout"),
 ) -> None:
-    """Profile a table and recommend analyses."""
+    """Unsupervised exploration."""
     df = _load(path)
-    payload = run_pipeline(df, target=target, max_analyses=max_analyses)
-    result = AnalysisResult(
-        _profile=payload["profile"],
-        _candidates=payload["candidates"],
-        _context=payload["context"],
-        _timings=payload["timings"],
-        _n_drafts=payload["n_drafts"],
-        _df=df,
-    )
+    result = explore(df, max_analyses=max_analyses)
+    _emit(result, out, json_out)
+
+
+@app.command("analyze")
+def analyze_cmd(
+    path: Path = typer.Argument(..., exists=True, readable=True),
+    target: str = typer.Option(..., "--target"),
+    max_analyses: int = typer.Option(10, "--max-analyses"),
+    out: Path | None = typer.Option(None, "--out"),
+    json_out: bool = typer.Option(False, "--json"),
+) -> None:
+    """Target-aware analysis."""
+    df = _load(path)
+    result = analyze(df, target=target, max_analyses=max_analyses)
+    _emit(result, out, json_out)
+
+
+def _emit(result, out: Path | None, json_out: bool) -> None:
     if json_out:
         typer.echo(result.to_json())
     else:
         summary = result.summary()
-        typer.echo(
-            f"Selected {summary['n_selected']} analyses "
-            f"(rejected {summary['n_rejected']}) from {path.name}."
-        )
-        for rec in result.recommendations():
-            typer.echo(f"  {rec.score:5.1f}  {rec.analysis_id}  {', '.join(rec.variables)}")
+        typer.echo(f"Selected {summary['n_selected']} analyses (rejected {summary['n_rejected']}).")
+        for item in summary["top_scores"]:
+            typer.echo(f"  {item['score']:>5}  {item['analysis_id']}  {item['variables']}")
     if out is not None:
         result.save(out)
         typer.echo(f"Wrote {out}")
 
 
-@app.command()
-def version() -> None:
-    """Print the package version."""
-    from nancora import __version__
-
-    typer.echo(__version__)
-
-
-def main() -> None:
-    app()
-
-
 if __name__ == "__main__":
-    main()
+    app()

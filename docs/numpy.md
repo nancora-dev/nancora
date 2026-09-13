@@ -1,9 +1,3 @@
-# NumPy layer
+# Numeric helpers
 
-`nc.numpy` is a curated namespace used by analyses:
-
-- `as_array`
-- `drop_non_finite`
-- `nan_aware_stats`
-
-It is not a NumPy clone. Use NumPy directly for general computation.
+`nc.numpy` is **not** a NumPy clone. It exposes `as_array`, `nan_aware_stats`, `iqr_outlier_mask`, and `drop_nan` because builtin analyses call them.

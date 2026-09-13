@@ -1,8 +1,8 @@
 # CLI
 
 ```bash
-nancora explore data.csv --target y --max-analyses 10 --out report.html
-nancora explore data.csv --json
+nancora explore path.csv --max-analyses 10 --out report.html
+nancora analyze path.csv --target y --out report.html --json
 ```
 
-Supported inputs: `.csv`, `.json`, `.xlsx` (extra), `.parquet` (extra).
+Supported suffixes: `.csv`, `.json`, `.xlsx` (extra), `.parquet` (extra).

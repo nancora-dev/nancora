@@ -1,9 +1,7 @@
 # Data
 
-`nc.read_csv`, `nc.read_json`, optional Excel/Parquet extras.
+`nc.read_csv`, `nc.read_excel`, `nc.read_json`, `nc.read_parquet` delegate to Pandas.
 
-`nc.data.infer_schema` assigns kinds: numeric, categorical, datetime, boolean, text, unknown.
+`nc.data.infer_schema` and `nc.data.profile` produce the typed profile the engine uses.
 
-`nc.data.profile` builds `DatasetProfile` (row/column counts, missing columns, high cardinality, constants, ids).
-
-Transforms: `drop_constant`, `coerce_datetime` — only helpers the engine needs.
+Transforms are few and engine-needed: `drop_constant`, `coerce_datetime`.

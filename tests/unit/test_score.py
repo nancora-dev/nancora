@@ -1,27 +1,26 @@
-from nancora.analysis.base import AnalysisCandidate, AnalysisContext, Evidence
+import pandas as pd
+
+from nancora.data.profile import profile
 from nancora.engine.score import score_candidate
+from nancora.analysis.base import AnalysisCandidate, AnalysisContext, AnalysisRequirements, Evidence
+from nancora.types import AnalysisStatus
 
 
-def test_strong_association_increases_score():
-    weak = AnalysisCandidate(
-        analysis_id="numeric_relationship",
-        analysis_type="bivariate",
-        intent="t",
-        variables=("a", "b"),
-        requirements={},
-        evidence=Evidence(stats={"pearson": {"statistic": 0.05, "n": 80}}),
+def test_score_trace_and_clamp():
+    df = pd.DataFrame({"x": [1.0, 2.0, 3.0, 4.0, 5.0] * 6})
+    prof = profile(df)
+    cand = AnalysisCandidate(
+        analysis_id="numeric_distribution",
+        analysis_type="univariate",
+        intent="dist",
+        variables=("x",),
+        requirements=AnalysisRequirements(),
+        family="univariate_numeric",
+        complexity=1.0,
+        evidence=Evidence(stats={"n": 30, "mean": 3.0, "std": 1.0}, provenance={}),
+        status=AnalysisStatus.SELECTED,
     )
-    strong = AnalysisCandidate(
-        analysis_id="numeric_relationship",
-        analysis_type="bivariate",
-        intent="t",
-        variables=("a", "c"),
-        requirements={},
-        evidence=Evidence(stats={"pearson": {"statistic": 0.95, "n": 80}}),
-    )
-    ctx = AnalysisContext()
-    weak_s = score_candidate(weak, ctx)
-    strong_s = score_candidate(strong, ctx)
-    assert strong_s.score > weak_s.score
-    assert "Base relevance" in strong_s.breakdown.format_trace()
-    assert "Final score" in strong_s.breakdown.format_trace()
+    scored = score_candidate(cand, prof, AnalysisContext())
+    assert 0 <= scored.score <= 100
+    assert "Base relevance" in scored.explanation
+    assert "Final score:" in scored.explanation

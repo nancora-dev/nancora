@@ -1,14 +1,12 @@
 # Architecture
 
-Pipeline:
-
-DATA → SCHEMA → PROFILE → CANDIDATES → EVIDENCE → SCORING → REDUNDANCY → RANKING → RECOMMENDATIONS → VISUALIZATION → INSIGHTS → REPORT
+Pipeline: data → schema → profile → candidates → evidence → scoring → redundancy → ranking → recommendations → visualization → insights → report.
 
 Scientific libraries are engines, not products Nancora reimplements.
 
-- Pandas: IO and frames
-- NumPy: arrays
-- SciPy: named statistical tests
-- Matplotlib / Plotly: `PlotSpec` backends
+- Pandas: frames and IO
+- NumPy: arrays and univariate numeric summaries
+- SciPy: named association tests
+- Matplotlib / Plotly: PlotSpec backends
 
-The intelligence engine (`nancora.engine`) is the differentiator. Builtin analyses live in `nancora.analysis.builtin` and register through `register_analysis`.
+The recommendation engine is the product differentiator. See `src/nancora/engine/`.

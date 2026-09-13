@@ -1,23 +1,21 @@
 # Getting started
 
-```bash
-pip install -e ".[dev]"
-```
-
 ```python
 import nancora as nc
 
-df = nc.read_csv("benchmarks/datasets/tiny.csv")
+df = nc.read_csv("data.csv")
 result = nc.explore(df)
 print(result.summary())
 for rec in result.recommendations():
-    print(rec.score, rec.analysis_id, rec.variables)
+    print(rec.analysis_id, rec.variables, rec.score)
     print(rec.explanation)
 result.save("report.html")
 ```
 
-CLI:
+With a target:
 
-```bash
-nancora explore benchmarks/datasets/tiny.csv --out report.html
+```python
+result = nc.analyze(df, target="churn", max_analyses=10)
 ```
+
+CLI: `nancora explore data.csv --out report.html`

@@ -4,47 +4,62 @@
   <meta charset="utf-8"/>
   <title>Nancora report</title>
   <style>
-    body { font-family: Georgia, serif; margin: 2rem auto; max-width: 900px; color: #1b1b1b; }
+    body { font-family: Georgia, serif; margin: 2rem auto; max-width: 880px; color: #222; }
     h1, h2 { font-family: system-ui, sans-serif; }
-    .score { font-variant-numeric: tabular-nums; }
-    details { margin: 0.5rem 0; }
+    .meta { color: #555; }
+    .card { border: 1px solid #ddd; padding: 1rem 1.2rem; margin: 1rem 0; border-radius: 6px; }
+    .score { font-weight: bold; }
+    pre { background: #f6f6f6; padding: 0.8rem; overflow: auto; }
     img { max-width: 100%; height: auto; }
-    footer { margin-top: 3rem; font-size: 0.9rem; color: #444; }
-    pre { background: #f4f1ea; padding: 0.75rem; overflow: auto; }
+    details { margin-top: 0.5rem; }
+    footer { margin-top: 3rem; font-size: 0.9rem; color: #666; }
   </style>
 </head>
 <body>
   <h1>Nancora analysis report</h1>
-  <p>Heuristic ranking only. Scores are not scientifically universal. Associations are not causal.</p>
-  <h2>Summary</h2>
-  <ul>
-    <li>Rows: {{ summary.n_rows }}</li>
-    <li>Columns: {{ summary.n_columns }}</li>
-    <li>Selected: {{ summary.n_selected }}</li>
-    <li>Rejected: {{ summary.n_rejected }}</li>
-    <li>Target: {{ summary.target or "none" }}</li>
-  </ul>
+  <p class="meta">
+    Rows: {{ summary.n_rows }} · Columns: {{ summary.n_cols }}
+    {% if summary.target %} · Target: {{ summary.target }}{% endif %}
+    · Selected: {{ summary.n_selected }} · Rejected: {{ summary.n_rejected }}
+  </p>
+  <p class="meta">Scores are heuristic ranking values (0–100), not scientific truth. Association is not causation.</p>
+
+  <h2>Profile</h2>
+  <div class="card">
+    <p>Kind counts: {{ profile.kind_counts }}</p>
+    <p>High cardinality: {{ profile.high_cardinality }}</p>
+    <p>Top missing: {{ profile.top_missing }}</p>
+  </div>
+
   <h2>Recommendations</h2>
   {% for rec in recommendations %}
-    <article>
-      <h3>{{ rec.analysis_id }} — {{ rec.variables | join(", ") }} <span class="score">({{ rec.score }})</span></h3>
-      <p>{{ rec.insight }}</p>
-      <pre>{{ rec.explanation }}</pre>
-      {% if rec.image %}<img alt="{{ rec.analysis_id }}" src="{{ rec.image }}"/>{% endif %}
-    </article>
+  <div class="card">
+    <h3>{{ rec.analysis_id }} <span class="score">{{ rec.score }}</span></h3>
+    <p>{{ rec.intent }} — {{ rec.variables }}</p>
+    {% if rec.image %}<p><img alt="{{ rec.analysis_id }}" src="{{ rec.image }}"/></p>{% endif %}
+    <pre>{{ rec.explanation }}</pre>
+  </div>
   {% endfor %}
+
   <h2>Insights</h2>
-  <ul>{% for line in insights %}<li>{{ line }}</li>{% endfor %}</ul>
+  <ul>
+    {% for line in insights %}
+    <li>{{ line }}</li>
+    {% endfor %}
+  </ul>
+
   <h2>Rejected analyses</h2>
-  {% for rec in rejected %}
-    <details>
-      <summary>{{ rec.analysis_id }} — {{ rec.variables | join(", ") }} ({{ rec.reject_reason }})</summary>
-      <pre>{{ rec.explanation }}</pre>
-    </details>
-  {% endfor %}
+  <details>
+    <summary>{{ rejected|length }} rejected (reasons are machine-readable)</summary>
+    {% for rec in rejected %}
+    <p>{{ rec.analysis_id }} {{ rec.variables }} — {{ rec.reject_reason }}</p>
+    {% endfor %}
+  </details>
+
   <footer>
-    Nancora does not claim causal effects. Pairwise analyses may be capped on wide tables.
-    Ranking scores are heuristics for attention, not ground truth.
+    Nancora does not claim these rankings are universally optimal.
+    Correlation and group differences are associations, not causal effects.
+    Pairwise analyses are capped on wide data. See LIMITATIONS.md.
   </footer>
 </body>
 </html>

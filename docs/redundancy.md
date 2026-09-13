@@ -1,11 +1,5 @@
 # Redundancy
 
-Rules:
+Rules: exact duplicates, symmetric pairs, similar families on the same variables, dominated subsets, coverage overlap of identical univariate views.
 
-- exact duplicates (same analysis id and variables)
-- symmetric duplicates (`Revenue × Spend` vs `Spend × Revenue`)
-- similar analyses (same family and variables, e.g. distribution vs outlier on one column)
-- dominated analyses (variable subset of a stronger family member)
-- coverage overlap for competing univariate views
-
-Reasons: `exact_duplicate`, `symmetric_duplicate`, `similar_analysis`, `dominated`, `coverage_overlap`, `below_rank_cutoff`, `invalid_requirements`.
+Rejected candidates remain in `result.rejected()` with `RejectReason` values. They are never silently dropped.

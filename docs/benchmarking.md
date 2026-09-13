@@ -1,7 +1,7 @@
 # Benchmarking
 
-See `benchmarks/README.md`.
+`benchmarks/runner.py` loads synthetic datasets and optional human labels.
 
-Metrics (only with human labels): precision@k, essential recall, redundancy rejected count, runtime, coverage of labeled essentials.
+Label values: `useful`, `essential`, `redundant`, `irrelevant`, `misleading`.
 
-The runner prints `no labels; skip scoring` when the label file is empty. Do not commit invented scores.
+If a dataset has no labels, the runner **skips metrics** rather than inventing scores. Do not commit fabricated precision/recall.

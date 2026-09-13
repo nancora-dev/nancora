@@ -1,7 +1,5 @@
 # Reports
 
-`result.save("report.html")` writes a Jinja HTML document from `AnalysisResult.to_dict()`.
+`result.save("report.html")` writes a Jinja2 HTML page: profile, recommendations with score traces and charts, insights, rejected list, limitations footer.
 
-Sections: summary, recommendations (score + explanation + optional chart), insights, rejected (collapsed), limitations footer.
-
-`result.save("out.json")` writes the same machine-readable payload.
+`result.save("result.json")` writes the versioned machine-readable schema (`nancora_result_version`).

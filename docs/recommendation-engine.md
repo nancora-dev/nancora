@@ -1,7 +1,13 @@
 # Recommendation engine
 
-`generate → validate → evidence → score → redundancy → coverage bonus → rank/select`
+`explore` and `analyze` share `run_pipeline` in `nancora.engine`.
 
-`nc.explore` and `nc.analyze` share this pipeline. `analyze` sets `target` on `AnalysisContext`.
+1. Generate drafts from the registry and profile
+2. Validate requirements
+3. Compute evidence (lazy, per valid candidate)
+4. Score with an explainable heuristic
+5. Filter redundancy
+6. Greedy coverage under `max_analyses`
+7. Return `AnalysisResult`
 
-Rejected candidates are retained with machine-readable `reject_reason` values.
+`analyze` only adds a target to context; target-aware analyses then propose and receive a score boost.

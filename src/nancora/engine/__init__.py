@@ -6,6 +6,7 @@ import time
 
 import pandas as pd
 
+from nancora.analysis import builtin as _builtin  # noqa: F401
 from nancora.analysis.base import AnalysisCandidate, AnalysisContext
 from nancora.analysis.evidence import sanitize_stats
 from nancora.analysis.registry import get_analysis

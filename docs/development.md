@@ -3,9 +3,9 @@
 ```bash
 pip install -e ".[dev]"
 pytest
-ruff check src tests benchmarks
+ruff check src tests
 ```
 
-Layout is `src/nancora`. Tests live under `tests/unit`, `tests/integration`, `tests/regression`.
+Python 3.10+. Src layout. CI runs Ruff and Pytest on 3.10 and 3.12.
 
-CI: `.github/workflows/ci.yml` (Python 3.10 and 3.12).
+Decision tests live in `tests/regression/test_decisions.py`. Prefer obvious synthetic relationships over threshold-tuning.

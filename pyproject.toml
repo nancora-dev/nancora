@@ -48,9 +48,6 @@ nancora = "nancora.cli:app"
 [project.urls]
 Homepage = "https://github.com/nancora/nancora"
 
-[tool.hatch.build.targets.wheel]
-packages = ["src/nancora"]
-
 [tool.hatch.build.targets.sdist]
 include = ["src/nancora", "tests", "docs", "benchmarks", "README.md", "LICENSE"]
 

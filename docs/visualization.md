@@ -1,5 +1,5 @@
 # Visualization
 
-Analyses emit a backend-agnostic `PlotSpec`. `nc.plot.render(spec, df, backend="matplotlib"|"plotly")` draws it.
+Analyses emit a `PlotSpec`. `nc.plot.render(df, spec, backend="matplotlib"|"plotly")` draws it.
 
-HTML reports embed Matplotlib PNGs. Plotly is for interactive notebook use via `result.visualize(backend="plotly")`.
+Reports embed Matplotlib PNGs. Interactive Plotly figures come from `result.visualize(backend="plotly")`.

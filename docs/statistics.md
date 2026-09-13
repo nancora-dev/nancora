@@ -1,11 +1,5 @@
 # Statistics
 
-`nc.stats` delegates to SciPy/Pandas:
+`nc.stats` wraps specific SciPy/Pandas calls: Pearson/Spearman/Kendall, KS two-sample, one-way ANOVA, chi-square independence, Pearson matrix.
 
-- `pearson`, `spearman`, `kendall`
-- `ks_2samp`
-- `chi2_independence`
-- `descriptive`
-- `iqr_outlier_mask`
-
-Every result includes `method` and `library` provenance. P-values are reported when SciPy computes them; they are not “significance theater” and do not imply causation.
+Every result includes a method name and library provenance. P-values are reported when SciPy computes them; they are not “significance stars” and not a license for causal language.

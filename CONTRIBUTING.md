@@ -1,22 +1,22 @@
 # Contributing
 
-1. Keep the public API small (`explore`, `analyze`, curated `data` / `numpy` / `stats` / `plot`).
-2. Do not reimplement Pandas, NumPy, SciPy, Matplotlib, or Plotly. Delegate.
-3. New public functions must either feed the recommendation engine or be IO/profile helpers it uses.
-4. Never fabricate statistics or causal claims.
-5. Ranking scores must stay explainable heuristics.
-6. Run `pytest` and `ruff check src tests benchmarks` before opening a PR.
-7. Add decision tests when changing scoring or redundancy.
+Nancora must not become a pile of unrelated wrappers.
 
-To register a future analysis:
+Every public feature should either:
 
-```python
-import nancora as nc
+1. provide a curated data-science abstraction the engine uses, or
+2. strengthen recommendation, scoring, redundancy, or explainability.
 
-@nc.register_analysis
-class MyAnalysis:
-    id = "my_analysis"
-    ...
+Do not reimplement Pandas, NumPy, SciPy, Matplotlib, or Plotly.
+Do not invent statistical evidence or causal claims from association.
+Do not add APIs merely to increase surface area.
+
+## Setup
+
+```bash
+python -m pip install -e ".[dev]"
+pytest
+ruff check src tests
 ```
 
-There is no plugin marketplace in this version.
+New analyses register with `@nancora.register_analysis` and implement `propose`, `compute_evidence`, and `plot_spec`. Add a decision test when ranking behavior changes.
