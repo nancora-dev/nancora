@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import numpy as np
 import pandas as pd
 
 from nancora.analysis.base import (
@@ -58,8 +59,8 @@ class DatetimeNumericTrend(Analysis):
     def compute_evidence(self, df: pd.DataFrame, candidate: AnalysisCandidate) -> Evidence:
         t, num = candidate.variables
         ts = pd.to_datetime(df[t], errors="coerce")
-        ordinal = ts.view("int64").astype(float)
-        ordinal[ts.isna()] = float("nan")
+        ordinal = ts.to_numpy(dtype="datetime64[ns]").astype("int64").astype(float)
+        ordinal[ts.isna().to_numpy()] = np.nan
         stats = spearman(ordinal, df[num])
         return Evidence(
             stats=dict(stats),

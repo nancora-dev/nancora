@@ -26,8 +26,13 @@ def test_explore_returns_selected_and_json_roundtrip():
     assert payload["nancora_result_version"] == "1"
     assert payload["recommendations"]
     ids = {c["analysis_id"] for c in payload["recommendations"]}
-    assert "missingness_analysis" in {c["analysis_id"] for c in payload["recommendations"] + payload["rejected"]} or True
-    assert any("distribution" in i or "relationship" in i or "missing" in i for i in ids)
+    assert ids & {
+        "missingness_analysis",
+        "numeric_distribution",
+        "numeric_relationship",
+        "correlation_analysis",
+        "categorical_distribution",
+    }
 
 
 def test_builtin_registry_has_ten_analyses():

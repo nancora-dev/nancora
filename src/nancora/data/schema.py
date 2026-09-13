@@ -45,7 +45,7 @@ def infer_column_kind(series: pd.Series, n_unique: int, n_non_null: int) -> Colu
         if n_unique <= LOW_CARDINALITY_MAX and n_unique / max(n_non_null, 1) < 0.05:
             return ColumnKind.CATEGORICAL
         return ColumnKind.NUMERIC
-    if pd.api.types.is_categorical_dtype(series):
+    if isinstance(series.dtype, pd.CategoricalDtype):
         return ColumnKind.CATEGORICAL
     if pd.api.types.is_string_dtype(series) or series.dtype == object:
         sample = series.dropna().astype(str)
