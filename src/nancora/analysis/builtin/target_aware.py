@@ -70,13 +70,11 @@ class TargetAware(Analysis):
                         ),
                     )
                 )
-        cats = [
-            n
-            for n in profile.names_of(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN)
-            if n != target
-            and profile.column(n)
-            and profile.column(n).n_unique <= CATEGORICAL_LEVEL_CAP
-        ]
+        cats = []
+        for n in profile.names_of(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN):
+            cinfo = profile.column(n)
+            if n != target and cinfo is not None and cinfo.n_unique <= CATEGORICAL_LEVEL_CAP:
+                cats.append(n)
         if tcol and tcol.kind == ColumnKind.NUMERIC:
             for cat in cats[:8]:
                 drafts.append(
@@ -97,27 +95,28 @@ class TargetAware(Analysis):
 
     def compute_evidence(self, df: pd.DataFrame, candidate: AnalysisCandidate) -> Evidence:
         vars_ = candidate.variables
+        stats: dict[str, Any]
         if len(vars_) == 1:
             name = vars_[0]
             if pd.api.types.is_numeric_dtype(df[name]):
-                stats = nan_aware_stats(df[name])
+                stats = dict(nan_aware_stats(df[name]))
             else:
                 stats = {
                     "n_levels": int(df[name].nunique(dropna=True)),
                     "n": int(df[name].notna().sum()),
                 }
             return Evidence(
-                stats=dict(stats),
+                stats=stats,
                 provenance={"library": "pandas/numpy", "method": "target_univariate"},
                 notes=["Target description only; not a predictive model."],
             )
         a, b = vars_
         if pd.api.types.is_numeric_dtype(df[a]) and pd.api.types.is_numeric_dtype(df[b]):
-            stats = pearson(df[a], df[b])
+            stats = dict(pearson(df[a], df[b]))
         else:
             cat = a if not pd.api.types.is_numeric_dtype(df[a]) else b
             num = b if cat == a else a
-            stats = f_oneway_groups(df[num], df[cat])
+            stats = dict(f_oneway_groups(df[num], df[cat]))
         return Evidence(
             stats=dict(stats),
             provenance={

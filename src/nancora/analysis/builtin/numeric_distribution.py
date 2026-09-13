@@ -49,7 +49,8 @@ class NumericDistribution(Analysis):
     def compute_evidence(self, df: pd.DataFrame, candidate: AnalysisCandidate) -> Evidence:
         name = candidate.variables[0]
         stats = nan_aware_stats(df[name])
-        stats["skew"] = float(pd.to_numeric(df[name], errors="coerce").skew(skipna=True) or 0.0)
+        sk_val = pd.to_numeric(df[name], errors="coerce").skew(skipna=True)
+        stats["skew"] = float(sk_val) if pd.notna(sk_val) else 0.0
         return Evidence(
             stats=stats,
             provenance={"library": "numpy/pandas", "method": "descriptive_univariate"},

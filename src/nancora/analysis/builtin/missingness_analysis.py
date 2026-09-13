@@ -53,7 +53,7 @@ class MissingnessAnalysis(Analysis):
             stats={
                 "n_columns_with_missing": n_missing_cols,
                 "cell_missing_rate": float(df.isna().mean().mean()) if len(df.columns) else 0.0,
-                "worst_column": max(rates, key=rates.get) if rates else None,
+                "worst_column": max(rates, key=lambda k: rates[k]) if rates else None,
                 "worst_rate": max(rates.values()) if rates else 0.0,
             },
             provenance={"library": "pandas", "method": "isna.mean"},

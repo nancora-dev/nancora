@@ -59,7 +59,8 @@ class CorrelationAnalysis(Analysis):
             for b in cols[i + 1 :]:
                 val = matrix.loc[a, b]
                 if pd.notna(val):
-                    strongest.append((abs(float(val)), a, b, float(val)))
+                    fval = float(val)
+                    strongest.append((abs(fval), a, b, fval))
         strongest.sort(reverse=True)
         top = strongest[0] if strongest else None
         return Evidence(
