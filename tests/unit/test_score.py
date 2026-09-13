@@ -1,8 +1,8 @@
 import pandas as pd
 
+from nancora.analysis.base import AnalysisCandidate, AnalysisContext, AnalysisRequirements, Evidence
 from nancora.data.profile import profile
 from nancora.engine.score import score_candidate
-from nancora.analysis.base import AnalysisCandidate, AnalysisContext, AnalysisRequirements, Evidence
 from nancora.types import AnalysisStatus
 
 

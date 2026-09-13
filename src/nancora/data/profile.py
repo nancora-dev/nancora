@@ -28,7 +28,6 @@ class DatasetProfile:
     def missing_columns(self) -> list[str]:
         return [name for name, _ in self.top_missing]
 
-
     def column(self, name: str) -> ColumnSchema | None:
         for col in self.columns:
             if col.name == name:

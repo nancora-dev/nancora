@@ -45,7 +45,11 @@ class Evidence:
     notes: list[str] = field(default_factory=list)
 
     def to_dict(self) -> dict:
-        return {"stats": dict(self.stats), "provenance": dict(self.provenance), "notes": list(self.notes)}
+        return {
+            "stats": dict(self.stats),
+            "provenance": dict(self.provenance),
+            "notes": list(self.notes),
+        }
 
 
 @dataclass
@@ -54,7 +58,12 @@ class ScoreBreakdown:
     final: float
 
     def format_trace(self) -> str:
-        lines = [f"{row['name']}: {row['delta']:+.1f}" if row.get("signed") else f"{row['name']}: {row['delta']:.1f}" for row in self.items]
+        lines = [
+            f"{row['name']}: {row['delta']:+.1f}"
+            if row.get("signed")
+            else f"{row['name']}: {row['delta']:.1f}"
+            for row in self.items
+        ]
         lines.append(f"Final score: {self.final:.1f}")
         return "\n".join(lines)
 
@@ -117,7 +126,9 @@ class AnalysisCandidate:
         }
 
 
-def draft_to_candidate(draft: CandidateDraft, status: AnalysisStatus = AnalysisStatus.SELECTED) -> AnalysisCandidate:
+def draft_to_candidate(
+    draft: CandidateDraft, status: AnalysisStatus = AnalysisStatus.SELECTED
+) -> AnalysisCandidate:
     return AnalysisCandidate(
         analysis_id=draft.analysis_id,
         analysis_type=draft.analysis_type,

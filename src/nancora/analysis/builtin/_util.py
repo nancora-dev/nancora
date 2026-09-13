@@ -8,14 +8,15 @@ import numpy as np
 import pandas as pd
 
 from nancora.data.profile import DatasetProfile
-from nancora.types import ColumnKind, ColumnRole, MAX_PAIRS, MAX_UNIVARIATE, PAIRWISE_SAMPLE_ROWS
+from nancora.types import MAX_PAIRS, MAX_UNIVARIATE, PAIRWISE_SAMPLE_ROWS, ColumnKind, ColumnRole
 
 
 def ranked_numeric(profile: DatasetProfile, limit: int = MAX_UNIVARIATE) -> list[str]:
     cols = [
         c
         for c in profile.columns
-        if c.kind == ColumnKind.NUMERIC and c.inferred_role not in {ColumnRole.ID, ColumnRole.CONSTANT}
+        if c.kind == ColumnKind.NUMERIC
+        and c.inferred_role not in {ColumnRole.ID, ColumnRole.CONSTANT}
     ]
     cols.sort(key=lambda c: (c.missing_rate, -c.n_unique, c.name))
     return [c.name for c in cols[:limit]]

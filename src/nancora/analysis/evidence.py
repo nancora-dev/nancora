@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from math import isfinite
 
-from nancora.analysis.base import AnalysisCandidate, Evidence
+from nancora.analysis.base import AnalysisCandidate
 
 
 def round_number(value, digits: int = 6):

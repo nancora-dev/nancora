@@ -2,7 +2,12 @@
 
 from __future__ import annotations
 
-from nancora.analysis.base import AnalysisCandidate, AnalysisContext, CandidateDraft, draft_to_candidate
+from nancora.analysis.base import (
+    AnalysisCandidate,
+    AnalysisContext,
+    CandidateDraft,
+    draft_to_candidate,
+)
 from nancora.data.profile import DatasetProfile
 from nancora.types import AnalysisStatus, RejectReason
 

@@ -64,6 +64,9 @@ class DatetimeNumericTrend(Analysis):
         stats = spearman(ordinal, df[num])
         return Evidence(
             stats=dict(stats),
-            provenance={"library": str(stats.get("library", "scipy.stats")), "method": "spearman_time_ordinal"},
+            provenance={
+                "library": str(stats.get("library", "scipy.stats")),
+                "method": "spearman_time_ordinal",
+            },
             notes=["Time association is not a forecast or causal effect."],
         )

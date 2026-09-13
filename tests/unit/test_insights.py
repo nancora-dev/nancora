@@ -1,5 +1,5 @@
-from nancora.analysis.evidence import insight_for
 from nancora.analysis.base import AnalysisCandidate, AnalysisRequirements, Evidence
+from nancora.analysis.evidence import insight_for
 
 
 def test_relationship_insight_mentions_not_causation():

@@ -37,7 +37,10 @@ class CorrelationAnalysis:
         cols = list(draft.variables)
         corr = df[cols].corr(method="pearson")
         matrix = {
-            str(r): {str(c): (None if pd.isna(corr.loc[r, c]) else float(corr.loc[r, c])) for c in corr.columns}
+            str(r): {
+                str(c): (None if pd.isna(corr.loc[r, c]) else float(corr.loc[r, c]))
+                for c in corr.columns
+            }
             for r in corr.index
         }
         stats = {"method": "pearson", "matrix": matrix, "n_columns": len(cols)}
@@ -57,7 +60,4 @@ class CorrelationAnalysis:
 
     def insight(self, draft: CandidateDraft, evidence: Evidence) -> str:
         n = evidence.stats.get("n_columns")
-        return (
-            f"Pearson correlation matrix over {n} numeric columns. "
-            "Associations are not causal."
-        )
+        return f"Pearson correlation matrix over {n} numeric columns. Associations are not causal."

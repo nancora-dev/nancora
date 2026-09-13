@@ -41,7 +41,11 @@ def infer_column_kind(series: pd.Series, n_unique: int, n_non_null: int) -> Colu
         return ColumnKind.DATETIME
     if pd.api.types.is_numeric_dtype(series):
         if n_unique <= 2:
-            return ColumnKind.BOOLEAN if set(series.dropna().unique()) <= {0, 1, True, False} else ColumnKind.CATEGORICAL
+            return (
+                ColumnKind.BOOLEAN
+                if set(series.dropna().unique()) <= {0, 1, True, False}
+                else ColumnKind.CATEGORICAL
+            )
         if n_unique <= LOW_CARDINALITY_MAX and n_unique / max(n_non_null, 1) < 0.05:
             return ColumnKind.CATEGORICAL
         return ColumnKind.NUMERIC

@@ -5,8 +5,8 @@ import numpy as np
 import pandas as pd
 
 import nancora as nc
-from nancora.engine.redundancy import apply_redundancy
 from nancora.analysis.base import AnalysisCandidate, AnalysisRequirements, Evidence
+from nancora.engine.redundancy import apply_redundancy
 from nancora.types import AnalysisStatus
 
 

@@ -96,7 +96,12 @@ def _dominated(a: AnalysisCandidate, b: AnalysisCandidate) -> bool:
 def _coverage_overlap(a: AnalysisCandidate, b: AnalysisCandidate) -> bool:
     if a.analysis_id != b.analysis_id:
         return False
-    if a.analysis_id in {"numeric_distribution", "categorical_distribution", "cardinality_analysis", "outlier_analysis"}:
+    if a.analysis_id in {
+        "numeric_distribution",
+        "categorical_distribution",
+        "cardinality_analysis",
+        "outlier_analysis",
+    }:
         return a.variables == b.variables
     return False
 

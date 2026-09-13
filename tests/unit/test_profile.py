@@ -1,5 +1,6 @@
-from nancora.data.profile import profile
 from tests.conftest import mixed_frame
+
+from nancora.data.profile import profile
 
 
 def test_profile_counts():

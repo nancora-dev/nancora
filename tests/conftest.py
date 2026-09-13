@@ -1,7 +1,6 @@
 import matplotlib
 import numpy as np
 import pandas as pd
-import pytest
 
 matplotlib.use("Agg")
 
@@ -19,4 +18,3 @@ def mixed_frame(n: int = 40) -> pd.DataFrame:
             "partial": partial,
         }
     )
-

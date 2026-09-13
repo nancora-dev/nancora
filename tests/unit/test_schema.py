@@ -1,7 +1,6 @@
 from pathlib import Path
 
 import pandas as pd
-import pytest
 
 from nancora.data.io import read_csv
 from nancora.data.profile import profile

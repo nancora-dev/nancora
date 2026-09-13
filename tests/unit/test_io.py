@@ -1,7 +1,8 @@
 from pathlib import Path
 
-import nancora as nc
 from tests.conftest import mixed_frame
+
+import nancora as nc
 
 
 def test_read_csv_roundtrip(tmp_path: Path):

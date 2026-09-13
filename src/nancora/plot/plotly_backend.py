@@ -27,9 +27,20 @@ def render_plotly(df: pd.DataFrame, spec: PlotSpec):
         return px.line(frame, x=spec.x, y=spec.y, title=spec.title)
     if kind == "heatmap":
         cols = spec.extra.get("columns") or []
-        corr = df[cols].apply(pd.to_numeric, errors="coerce").corr() if cols else df.corr(numeric_only=True)
+        corr = (
+            df[cols].apply(pd.to_numeric, errors="coerce").corr()
+            if cols
+            else df.corr(numeric_only=True)
+        )
         return go.Figure(
-            data=go.Heatmap(z=corr.values, x=list(corr.columns), y=list(corr.columns), colorscale="RdBu", zmin=-1, zmax=1),
+            data=go.Heatmap(
+                z=corr.values,
+                x=list(corr.columns),
+                y=list(corr.columns),
+                colorscale="RdBu",
+                zmin=-1,
+                zmax=1,
+            ),
             layout={"title": spec.title},
         )
     return go.Figure(layout={"title": f"Unsupported plot kind: {kind}"})

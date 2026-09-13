@@ -40,7 +40,12 @@ def render_matplotlib(df: pd.DataFrame, spec: PlotSpec):
     elif kind == "box" and spec.x and spec.y:
         grouped = df[[spec.x, spec.y]].dropna()
         labels = list(grouped[spec.x].astype("string").unique())[:12]
-        data = [pd.to_numeric(grouped.loc[grouped[spec.x].astype("string") == lab, spec.y], errors="coerce").dropna() for lab in labels]
+        data = [
+            pd.to_numeric(
+                grouped.loc[grouped[spec.x].astype("string") == lab, spec.y], errors="coerce"
+            ).dropna()
+            for lab in labels
+        ]
         ax.boxplot(data, tick_labels=[str(x) for x in labels])
         ax.set_xlabel(spec.x)
         ax.set_ylabel(spec.y)

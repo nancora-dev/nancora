@@ -27,7 +27,9 @@ class TargetAware(Analysis):
     analysis_type = "target"
     intent = "Relate columns to a specified target"
     family = "target"
-    requirements = AnalysisRequirements(min_rows=5, min_variables=1, max_variables=2, needs_target=True)
+    requirements = AnalysisRequirements(
+        min_rows=5, min_variables=1, max_variables=2, needs_target=True
+    )
 
     def propose(self, profile: DatasetProfile, context: AnalysisContext) -> list[CandidateDraft]:
         if not context.target or profile.column(context.target) is None:
@@ -63,13 +65,17 @@ class TargetAware(Analysis):
                         requirements=self.requirements,
                         family="target_numeric_pair",
                         complexity=2.0,
-                        viz=PlotSpec(kind="scatter", title=f"{name} vs target {target}", x=name, y=target),
+                        viz=PlotSpec(
+                            kind="scatter", title=f"{name} vs target {target}", x=name, y=target
+                        ),
                     )
                 )
         cats = [
             n
             for n in profile.names_of(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN)
-            if n != target and profile.column(n) and profile.column(n).n_unique <= CATEGORICAL_LEVEL_CAP
+            if n != target
+            and profile.column(n)
+            and profile.column(n).n_unique <= CATEGORICAL_LEVEL_CAP
         ]
         if tcol and tcol.kind == ColumnKind.NUMERIC:
             for cat in cats[:8]:
@@ -82,7 +88,9 @@ class TargetAware(Analysis):
                         requirements=self.requirements,
                         family="target_cat_num",
                         complexity=2.1,
-                        viz=PlotSpec(kind="box", title=f"Target {target} by {cat}", x=cat, y=target),
+                        viz=PlotSpec(
+                            kind="box", title=f"Target {target} by {cat}", x=cat, y=target
+                        ),
                     )
                 )
         return drafts
@@ -94,7 +102,10 @@ class TargetAware(Analysis):
             if pd.api.types.is_numeric_dtype(df[name]):
                 stats = nan_aware_stats(df[name])
             else:
-                stats = {"n_levels": int(df[name].nunique(dropna=True)), "n": int(df[name].notna().sum())}
+                stats = {
+                    "n_levels": int(df[name].nunique(dropna=True)),
+                    "n": int(df[name].notna().sum()),
+                }
             return Evidence(
                 stats=dict(stats),
                 provenance={"library": "pandas/numpy", "method": "target_univariate"},
@@ -109,6 +120,9 @@ class TargetAware(Analysis):
             stats = f_oneway_groups(df[num], df[cat])
         return Evidence(
             stats=dict(stats),
-            provenance={"library": "scipy.stats", "method": str(stats.get("method", "target_assoc"))},
+            provenance={
+                "library": "scipy.stats",
+                "method": str(stats.get("method", "target_assoc")),
+            },
             notes=["Association with the target is not causation and not a fitted model."],
         )

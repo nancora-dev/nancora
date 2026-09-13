@@ -1,7 +1,8 @@
 import json
 
-import nancora as nc
 from tests.conftest import mixed_frame
+
+import nancora as nc
 
 
 def test_regression_json_stable_keys(tmp_path):

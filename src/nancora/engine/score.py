@@ -102,13 +102,48 @@ def score_candidate(
     coverage = 0.0  # filled during selection
 
     items = [
-        {"name": "Base relevance", "delta": round(base, 1), "signed": False, "note": "Heuristic prior for this analysis type"},
-        {"name": "Target proximity", "delta": round(target_boost, 1), "signed": True, "note": "Boost if the target is involved"},
-        {"name": "Relationship strength", "delta": round(rel_strength, 1), "signed": True, "note": "From measured association; 0 if univariate"},
-        {"name": "Information value", "delta": round(info, 1), "signed": True, "note": "Non-degeneracy / sample support"},
-        {"name": "Data quality", "delta": round(quality, 1), "signed": True, "note": "Sample size and missingness"},
-        {"name": "Coverage", "delta": round(coverage, 1), "signed": True, "note": "Filled at selection time"},
-        {"name": "Complexity", "delta": round(complexity, 1), "signed": True, "note": "Pairwise analyses cost a small penalty"},
+        {
+            "name": "Base relevance",
+            "delta": round(base, 1),
+            "signed": False,
+            "note": "Heuristic prior for this analysis type",
+        },
+        {
+            "name": "Target proximity",
+            "delta": round(target_boost, 1),
+            "signed": True,
+            "note": "Boost if the target is involved",
+        },
+        {
+            "name": "Relationship strength",
+            "delta": round(rel_strength, 1),
+            "signed": True,
+            "note": "From measured association; 0 if univariate",
+        },
+        {
+            "name": "Information value",
+            "delta": round(info, 1),
+            "signed": True,
+            "note": "Non-degeneracy / sample support",
+        },
+        {
+            "name": "Data quality",
+            "delta": round(quality, 1),
+            "signed": True,
+            "note": "Sample size and missingness",
+        },
+        {
+            "name": "Coverage",
+            "delta": round(coverage, 1),
+            "signed": True,
+            "note": "Filled at selection time",
+        },
+        {
+            "name": "Complexity",
+            "delta": round(complexity, 1),
+            "signed": True,
+            "note": "Pairwise analyses cost a small penalty",
+        },
     ]
     total = base + target_boost + rel_strength + info + quality + coverage + complexity
     total = max(0.0, min(100.0, total))

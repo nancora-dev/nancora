@@ -54,6 +54,9 @@ class NumericRelationship(Analysis):
         stats = pearson(df[a], df[b])
         return Evidence(
             stats=dict(stats),
-            provenance={"library": str(stats.get("library", "scipy.stats")), "method": str(stats.get("method", "pearson"))},
+            provenance={
+                "library": str(stats.get("library", "scipy.stats")),
+                "method": str(stats.get("method", "pearson")),
+            },
             notes=["Association is not causation."],
         )

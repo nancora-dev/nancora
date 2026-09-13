@@ -22,7 +22,8 @@ class CardinalityAnalysis:
         cols = [
             c.name
             for c in profile.columns
-            if c.kind in {ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN, ColumnKind.TEXT, ColumnKind.NUMERIC}
+            if c.kind
+            in {ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN, ColumnKind.TEXT, ColumnKind.NUMERIC}
         ]
         cols = sorted(cols)[: context.max_univariate]
         if not cols:

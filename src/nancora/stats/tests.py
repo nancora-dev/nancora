@@ -12,7 +12,12 @@ from nancora.numeric.arrays import as_array, drop_nan
 def _corr(x, y, method: str) -> dict[str, float | str]:
     xa, ya = drop_nan(as_array(x), as_array(y))
     if xa.size < 3:
-        return {"n": float(xa.size), "coefficient": float("nan"), "p_value": float("nan"), "method": method}
+        return {
+            "n": float(xa.size),
+            "coefficient": float("nan"),
+            "p_value": float("nan"),
+            "method": method,
+        }
     if method == "pearson":
         r, p = scipy_stats.pearsonr(xa, ya)
     elif method == "spearman":
@@ -59,11 +64,18 @@ def ks_2samp(a, b) -> dict[str, float | str]:
 
 
 def f_oneway_groups(values, groups) -> dict[str, float | str]:
-    frame = pd.DataFrame({"v": pd.to_numeric(pd.Series(values), errors="coerce"), "g": pd.Series(groups)})
+    frame = pd.DataFrame(
+        {"v": pd.to_numeric(pd.Series(values), errors="coerce"), "g": pd.Series(groups)}
+    )
     frame = frame.dropna()
     samples = [g["v"].to_numpy() for _, g in frame.groupby("g") if len(g) >= 2]
     if len(samples) < 2:
-        return {"statistic": float("nan"), "p_value": float("nan"), "n_groups": float(len(samples)), "method": "f_oneway"}
+        return {
+            "statistic": float("nan"),
+            "p_value": float("nan"),
+            "n_groups": float(len(samples)),
+            "method": "f_oneway",
+        }
     stat, p = scipy_stats.f_oneway(*samples)
     return {
         "statistic": float(stat),

@@ -64,6 +64,9 @@ class CategoricalNumeric(Analysis):
         stats = f_oneway_groups(df[num], df[cat])
         return Evidence(
             stats=dict(stats),
-            provenance={"library": str(stats.get("library", "scipy.stats")), "method": str(stats.get("method", "f_oneway"))},
+            provenance={
+                "library": str(stats.get("library", "scipy.stats")),
+                "method": str(stats.get("method", "f_oneway")),
+            },
             notes=["Association is not causation."],
         )

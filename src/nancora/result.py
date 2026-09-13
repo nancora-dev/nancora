@@ -52,7 +52,6 @@ class AnalysisResult:
     def rejected_candidates(self) -> list[AnalysisCandidate]:
         return list(self.rejected)
 
-
     def visualize(self, backend: str = "matplotlib"):
         if self.frame is None:
             raise ReportError("No DataFrame attached; cannot visualize.")
