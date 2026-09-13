@@ -52,6 +52,25 @@ class AnalysisResult:
     def rejected_candidates(self) -> list[AnalysisCandidate]:
         return list(self.rejected)
 
+    def explain(self, target: int | str = 0) -> dict[str, Any]:
+        from nancora.engine.explain import explain_decision
+
+        if not self.selected:
+            return {"error": "No candidates selected"}
+        cand: AnalysisCandidate | None = None
+        if isinstance(target, int):
+            if 0 <= target < len(self.selected):
+                cand = self.selected[target]
+        elif isinstance(target, str):
+            for c in self.selected:
+                if c.analysis_id == target:
+                    cand = c
+                    break
+        if cand is None:
+            cand = self.selected[0]
+        return explain_decision(cand, self.rejected)
+
+
     def visualize(self, backend: str = "matplotlib"):
         if self.frame is None:
             raise ReportError("No DataFrame attached; cannot visualize.")

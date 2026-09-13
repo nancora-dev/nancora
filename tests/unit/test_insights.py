@@ -15,3 +15,16 @@ def test_relationship_insight_mentions_not_causation():
     )
     text = insight_for(cand).lower()
     assert "not causation" in text
+
+
+def test_explain_decision():
+    import nancora as nc
+    from tests.conftest import mixed_frame
+
+    res = nc.explore(mixed_frame(), max_analyses=5)
+    exp = res.explain(0)
+    assert "what" in exp
+    assert "score" in exp
+    assert "evidence" in exp
+    assert "why_not_others" in exp
+
