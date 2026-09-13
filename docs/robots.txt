@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://github.com/nancora/nancora/raw/main/docs/sitemap.xml
