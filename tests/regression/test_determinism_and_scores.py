@@ -25,6 +25,10 @@ def test_determinism_across_runs():
     # Timings differ slightly per CPU execution run; everything else is 100% deterministic
     d1.pop("timings", None)
     d2.pop("timings", None)
+    if "summary" in d1:
+        d1["summary"].pop("runtime_seconds", None)
+    if "summary" in d2:
+        d2["summary"].pop("runtime_seconds", None)
 
     assert d1 == d2
     assert [c.score for c in res1.recommendations] == [c.score for c in res2.recommendations]
