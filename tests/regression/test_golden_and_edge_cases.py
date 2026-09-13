@@ -47,9 +47,11 @@ def test_edge_case_infinite_and_null_values():
     )
     res = nc.explore(df)
     assert res.summary()["n_rows"] == 8
-    num_cand = next(c for c in res.selected if c.analysis_id == "numeric_distribution")
+    num_cand = next(
+        c for c in res.selected if c.analysis_id == "numeric_distribution" and c.variables == ("x",)
+    )
     assert num_cand.evidence is not None
-    assert num_cand.evidence.stats["n"] == 5.0  # 5 finite values (excluding inf, -inf, nan)
+    assert num_cand.evidence.stats["n"] == 5.0
 
 
 def test_edge_case_non_string_column_names():
