@@ -9,7 +9,7 @@ from nancora.data.profile import DatasetProfile
 
 BASE_RELEVANCE = {
     # Prior values (documented relative heuristics, NOT statistical probabilities):
-    "target_aware": 72.0,            # High prior: user explicitly requested target analysis
+    "target_aware": 78.0,            # High prior: user explicitly requested target analysis
     "correlation_analysis": 64.0,     # Bivariate correlation matrix overview
     "numeric_relationship": 62.0,    # Pairwise continuous association
     "datetime_numeric_trend": 61.0,  # Temporal trend analysis

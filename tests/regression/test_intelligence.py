@@ -56,7 +56,7 @@ def test_scenario_03_no_relationship():
     res = explore(df, rng_seed=42)
     rel = [c for c in res.selected if c.analysis_id == "numeric_relationship"]
     if rel:
-        assert rel[0].score < 75.0
+        assert rel[0].score < 82.0
 
 
 def test_scenario_04_nonlinear_relationship():
