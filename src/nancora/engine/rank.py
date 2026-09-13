@@ -29,8 +29,8 @@ def rank_and_select(
             for item in cand.breakdown.items:
                 if item["name"] == "Coverage":
                     item["delta"] = cand.coverage
-            total = min(100.0, max(0.0, (cand.score or 0.0) + cand.coverage))
-            cand.score = round(total, 1)
+            calc_sum = sum(item["delta"] for item in cand.breakdown.items)
+            cand.score = round(max(0.0, min(100.0, calc_sum)), 1)
             cand.breakdown.final = cand.score
             cand.explanation = cand.breakdown.format_trace()
         selected.append(cand)
