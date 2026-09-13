@@ -66,7 +66,7 @@ def infer_role(name: str, kind: ColumnKind, n_unique: int, n_rows: int) -> Colum
     if lowered in id_tokens or lowered.endswith("_id") or lowered.endswith("id"):
         if n_unique >= max(10, int(0.9 * n_rows)):
             return ColumnRole.ID
-    if n_unique == n_rows and n_rows > 5 and kind in {ColumnKind.NUMERIC, ColumnKind.TEXT, ColumnKind.CATEGORICAL}:
+    if n_unique == n_rows and n_rows > 5 and kind in {ColumnKind.TEXT, ColumnKind.CATEGORICAL}:
         return ColumnRole.ID
     return ColumnRole.FEATURE
 
