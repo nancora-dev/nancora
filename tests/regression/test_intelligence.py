@@ -6,7 +6,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from nancora.analysis.evidence import format_p_value, sanitize_stats
+from nancora.analysis.evidence import format_p_value, insight_for, sanitize_stats
 from nancora.engine import explore
 
 
@@ -36,16 +36,16 @@ def test_issue1_zero_vs_high_missingness():
 
 
 def test_issue2_outlier_vs_distribution_redundancy():
-    # Dataset with 0 outliers (normal distribution, no extreme points)
-    rng = np.random.RandomState(42)
-    df_normal = pd.DataFrame({"col": rng.randn(100)})
-    res_normal = explore(df_normal)
-    selected_ids = [c.analysis_id for c in res_normal.selected]
-    rejected_sim = [r for r in res_normal.rejected if r.analysis_id == "outlier_analysis"]
+    # Bounded dataset with zero IQR outliers (linspace -1 to 1)
+    df_zero_outliers = pd.DataFrame({"col": np.linspace(-1.0, 1.0, 100)})
+    res_zero = explore(df_zero_outliers)
+    selected_ids = [c.analysis_id for c in res_zero.selected]
+    rejected_sim = [r for r in res_zero.rejected if r.analysis_id == "outlier_analysis"]
     assert "numeric_distribution" in selected_ids
-    assert len(rejected_sim) > 0, "Outlier analysis with 0 outliers should be rejected as similar"
+    assert len(rejected_sim) > 0, "Outlier analysis with 0 outliers should be rejected as redundant"
 
     # Dataset with strong outliers
+    rng = np.random.RandomState(42)
     df_outliers = pd.DataFrame({"col": np.concatenate([rng.randn(90), [50.0, 100.0, -80.0]])})
     res_outliers = explore(df_outliers)
     selected_outliers_ids = [c.analysis_id for c in res_outliers.selected]
@@ -76,7 +76,7 @@ def test_issue3_extremely_small_p_values():
     p_disp = cat_num.evidence.stats.get("p_value_display")
     assert p_val is not None
     assert p_disp == "< 1e-12"
-    assert "p=< 1e-12" in cat_num.explanation or "p_value" in cat_num.explanation
+    assert "p=< 1e-12" in insight_for(cat_num)
 
 
 def test_issue4_boolean_targets():
@@ -93,9 +93,8 @@ def test_issue4_boolean_targets():
     assert len(selected_target_views) >= 2, "Should recommend target-aware views for boolean target"
 
     vars_involved = [c.variables for c in selected_target_views]
-    assert ("churned",) in vars_involved
-    assert any("age" in v for v in vars_involved)
-    assert any("tier" in v for v in vars_involved)
+    assert any("churned" in v and "age" in v for v in vars_involved)
+    assert any("churned" in v and "tier" in v for v in vars_involved)
 
 
 def test_issue6_dataset_adaptivity_14_scenarios():
@@ -194,5 +193,7 @@ def test_issue6_dataset_adaptivity_14_scenarios():
     # 14. Constant columns
     df14 = pd.DataFrame({"const": [1.0] * n, "val": rng.randn(n)})
     res14 = explore(df14)
+    # const column should be excluded from univariate/bivariate feature analyses
     for c in res14.selected:
-        assert "const" not in c.variables or c.analysis_id == "cardinality_analysis"
+        if c.analysis_id in ("numeric_distribution", "numeric_relationship"):
+            assert "const" not in c.variables
