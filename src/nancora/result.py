@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any
+from typing import Any, TypeVar
 
 import pandas as pd
 
@@ -15,9 +15,11 @@ from nancora.data.profile import DatasetProfile
 from nancora.plot import render as render_plot
 from nancora.types import RESULT_SCHEMA_VERSION
 
+T = TypeVar("T")
 
-class CallableList(list):
-    def __call__(self) -> CallableList:
+
+class CallableList(list[T]):
+    def __call__(self) -> CallableList[T]:
         return self
 
 
