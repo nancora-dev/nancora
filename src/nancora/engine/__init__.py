@@ -51,7 +51,7 @@ def run_pipeline(
         )
 
     if df.empty:
-        raise InputError("Input dataset is empty. Provide a DataFrame containing at least one row.")
+        raise InputError("Cannot analyze an empty DataFrame. Provide a DataFrame containing at least one row.")
 
     if not isinstance(max_analyses, int) or max_analyses <= 0:
         raise ConfigurationError(
@@ -77,7 +77,7 @@ def run_pipeline(
             )
         if target not in df.columns:
             raise InputError(
-                f"Target column '{target}' not found in DataFrame columns: {list(df.columns)}."
+                f"Target column not found: '{target}' in DataFrame columns {list(df.columns)}."
             )
 
     started = time.perf_counter()
