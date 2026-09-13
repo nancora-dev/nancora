@@ -1,0 +1,16 @@
+{
+  "dataset_id": "synthetic_missing",
+  "description": "Synthetic benchmark dataset with high missingness",
+  "labels": [
+    {
+      "analysis_id": "missingness_analysis",
+      "variables": ["col_a", "col_b", "col_c"],
+      "kind": "essential"
+    },
+    {
+      "analysis_id": "numeric_distribution",
+      "variables": ["col_a"],
+      "kind": "useful"
+    }
+  ]
+}

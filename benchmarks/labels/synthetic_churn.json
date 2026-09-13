@@ -1,0 +1,16 @@
+{
+  "dataset_id": "synthetic_churn",
+  "description": "Synthetic benchmark dataset with boolean churn target",
+  "labels": [
+    {
+      "analysis_id": "categorical_numeric",
+      "variables": ["churned", "tenure"],
+      "kind": "essential"
+    },
+    {
+      "analysis_id": "categorical_distribution",
+      "variables": ["churned"],
+      "kind": "useful"
+    }
+  ]
+}
