@@ -38,12 +38,14 @@ def _relationship_strength(candidate: AnalysisCandidate) -> float:
         return min(20.0, 20.0 * abs(_finite(stats.get("coefficient"))))
     if "strongest_abs" in stats:
         return min(18.0, 18.0 * abs(_finite(stats.get("strongest_abs"))))
-    if stats.get("method") == "f_oneway":
+    if "p_value" in stats and ("statistic" in stats or "coefficient" in stats):
         p = _finite(stats.get("p_value"), 1.0)
-        stat = _finite(stats.get("statistic"))
-        if stat <= 0:
+        stat = _finite(stats.get("statistic", stats.get("coefficient", 0.0)))
+        if stat <= 0 or p >= 0.5:
             return 0.0
-        return min(16.0, 8.0 + 8.0 * (1.0 - min(p, 1.0)))
+        sig = 1.0 - min(p, 0.5) * 2.0
+        stat_boost = min(1.0, math.log10(max(1.0, stat)) / 3.0)
+        return min(20.0, 10.0 * sig + 10.0 * stat_boost)
     if "n_outliers" in stats:
         n_out = int(_finite(stats.get("n_outliers")))
         rate = _finite(stats.get("outlier_rate"))
@@ -100,14 +102,16 @@ def score_candidate(
     target_boost = 0.0
     if context.target and context.target in candidate.variables:
         target_boost = 14.0
-    elif candidate.analysis_id == "target_aware":
-        target_boost = 16.0
 
     rel_strength = _relationship_strength(candidate)
     info = _information_value(candidate, profile)
     quality = _data_quality(candidate, profile)
     complexity = _complexity_penalty(candidate)
     coverage = 0.0  # filled during selection
+
+    uncapped_total = base + target_boost + rel_strength + info + quality + coverage + complexity
+    final_score = max(0.0, min(100.0, uncapped_total))
+    final_score = round(final_score, 1)
 
     items = [
         {
@@ -153,11 +157,24 @@ def score_candidate(
             "note": "Pairwise analyses cost a small penalty",
         },
     ]
-    total = base + target_boost + rel_strength + info + quality + coverage + complexity
-    total = max(0.0, min(100.0, total))
-    total = round(total, 1)
-    candidate.score = total
-    candidate.breakdown = ScoreBreakdown(items=items, final=total)
+
+    if uncapped_total > 100.0:
+        items.append({
+            "name": "Score ceiling cap",
+            "delta": round(100.0 - uncapped_total, 1),
+            "signed": True,
+            "note": "Capped at 100.0 maximum relevance score",
+        })
+    elif uncapped_total < 0.0:
+        items.append({
+            "name": "Score floor cap",
+            "delta": round(0.0 - uncapped_total, 1),
+            "signed": True,
+            "note": "Capped at 0.0 minimum relevance score",
+        })
+
+    candidate.score = final_score
+    candidate.breakdown = ScoreBreakdown(items=items, final=final_score)
     candidate.explanation = candidate.breakdown.format_trace()
     return candidate
 
