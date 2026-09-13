@@ -5,12 +5,12 @@ build-backend = "hatchling.build"
 [project]
 name = "nancora"
 version = "0.1.0"
-description = "A Python data-science toolkit that recommends which analyses are worth attention."
+description = "A Python library for automated data analysis and visualization recommendations."
 readme = "README.md"
 license = "MIT"
 requires-python = ">=3.10"
 authors = [{ name = "Nancora" }]
-keywords = ["data-analysis", "eda", "recommendation", "statistics"]
+keywords = ["data-analysis", "eda", "visualization", "recommendation-system", "statistics", "python-library"]
 classifiers = [
   "Development Status :: 3 - Alpha",
   "Intended Audience :: Science/Research",
@@ -47,6 +47,9 @@ nancora = "nancora.cli:app"
 
 [project.urls]
 Homepage = "https://github.com/nancora/nancora"
+Documentation = "https://github.com/nancora/nancora#readme"
+Repository = "https://github.com/nancora/nancora.git"
+Changelog = "https://github.com/nancora/nancora/blob/main/CHANGELOG.md"
 
 [tool.hatch.build.targets.sdist]
 include = ["src/nancora", "tests", "docs", "benchmarks", "README.md", "LICENSE"]
