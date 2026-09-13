@@ -53,7 +53,11 @@ def main():
     # 8. Deterministic repeated runs
     run_a = nc.explore(df, target="churned", rng_seed=123).to_dict()
     run_b = nc.explore(df, target="churned", rng_seed=123).to_dict()
-    assert json.dumps(run_a) == json.dumps(run_b), "Repeated runs with same seed must be 100% deterministic"
+    del run_a['timings']
+    del run_b['timings']
+    del run_a['summary']['runtime_seconds']
+    del run_b['summary']['runtime_seconds']
+    assert run_a == run_b, "Repeated runs with same seed must produce identical recommendations and scores"
 
     print("All final API, determinism, and representation checks PASSED!")
 
