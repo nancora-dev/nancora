@@ -19,7 +19,7 @@ from nancora.analysis.registry import register_analysis
 from nancora.data.profile import DatasetProfile
 from nancora.numeric.arrays import nan_aware_stats
 from nancora.plot.spec import PlotSpec
-from nancora.stats.tests import f_oneway_groups, pearson
+from nancora.stats.tests import chi2_independence, f_oneway_groups, pearson
 from nancora.types import CATEGORICAL_LEVEL_CAP, ColumnKind
 
 
@@ -55,6 +55,12 @@ class TargetAware(Analysis):
                 ),
             )
         )
+        cats = []
+        for n in profile.names_of(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN):
+            cinfo = profile.column(n)
+            if n != target and cinfo is not None and cinfo.n_unique <= CATEGORICAL_LEVEL_CAP:
+                cats.append(n)
+
         if tcol and tcol.kind == ColumnKind.NUMERIC:
             for name in ranked_numeric_names(profile, exclude={target})[:8]:
                 a, b = sorted((name, target))
@@ -72,12 +78,6 @@ class TargetAware(Analysis):
                         ),
                     )
                 )
-        cats = []
-        for n in profile.names_of(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN):
-            cinfo = profile.column(n)
-            if n != target and cinfo is not None and cinfo.n_unique <= CATEGORICAL_LEVEL_CAP:
-                cats.append(n)
-        if tcol and tcol.kind == ColumnKind.NUMERIC:
             for cat in cats[:8]:
                 drafts.append(
                     CandidateDraft(
@@ -90,6 +90,37 @@ class TargetAware(Analysis):
                         complexity=2.1,
                         viz=PlotSpec(
                             kind="box", title=f"Target {target} by {cat}", x=cat, y=target
+                        ),
+                    )
+                )
+        elif tcol and tcol.kind in (ColumnKind.BOOLEAN, ColumnKind.CATEGORICAL):
+            for name in ranked_numeric_names(profile, exclude={target})[:8]:
+                drafts.append(
+                    CandidateDraft(
+                        analysis_id=self.id,
+                        analysis_type=self.analysis_type,
+                        intent="Numeric feature comparison across target groups",
+                        variables=(target, name),
+                        requirements=self.requirements,
+                        family="target_cat_num",
+                        complexity=2.0,
+                        viz=PlotSpec(
+                            kind="box", title=f"{name} by target {target}", x=target, y=name
+                        ),
+                    )
+                )
+            for cat in cats[:8]:
+                drafts.append(
+                    CandidateDraft(
+                        analysis_id=self.id,
+                        analysis_type=self.analysis_type,
+                        intent="Categorical association with target",
+                        variables=(cat, target),
+                        requirements=self.requirements,
+                        family="target_cat_cat",
+                        complexity=2.1,
+                        viz=PlotSpec(
+                            kind="bar", title=f"{cat} by target {target}", x=cat
                         ),
                     )
                 )
@@ -113,12 +144,16 @@ class TargetAware(Analysis):
                 notes=["Target description only; not a predictive model."],
             )
         a, b = vars_
-        if pd.api.types.is_numeric_dtype(df[a]) and pd.api.types.is_numeric_dtype(df[b]):
+        a_is_num = pd.api.types.is_numeric_dtype(df[a])
+        b_is_num = pd.api.types.is_numeric_dtype(df[b])
+        if a_is_num and b_is_num:
             stats = dict(pearson(df[a], df[b]))
-        else:
-            cat = a if not pd.api.types.is_numeric_dtype(df[a]) else b
-            num = b if cat == a else a
+        elif a_is_num != b_is_num:
+            num = a if a_is_num else b
+            cat = b if a_is_num else a
             stats = dict(f_oneway_groups(df[num], df[cat]))
+        else:
+            stats = dict(chi2_independence(df[a], df[b]))
         return Evidence(
             stats=dict(stats),
             provenance={
