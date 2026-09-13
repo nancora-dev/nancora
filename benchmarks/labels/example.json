@@ -1,0 +1,5 @@
+{
+  "schema_version": "1.0.0",
+  "description": "Human labels per (dataset_id, analysis_id, variables). Allowed labels: useful, essential, redundant, irrelevant, misleading. This file is empty on purpose; do not invent scores.",
+  "labels": []
+}
