@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from math import isfinite
 
+from typing import Any
+
 from nancora.analysis.base import AnalysisCandidate
 
 

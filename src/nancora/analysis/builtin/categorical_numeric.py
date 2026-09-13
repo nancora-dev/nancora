@@ -34,11 +34,11 @@ class CategoricalNumeric(Analysis):
     )
 
     def propose(self, profile: DatasetProfile, context: AnalysisContext) -> list[CandidateDraft]:
-        cats = [
-            n
-            for n in profile.names_of(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN)
-            if (profile.column(n) and profile.column(n).n_unique <= CATEGORICAL_LEVEL_CAP)
-        ]
+        cats = []
+        for n in profile.names_of(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN):
+            cinfo = profile.column(n)
+            if cinfo is not None and cinfo.n_unique <= CATEGORICAL_LEVEL_CAP:
+                cats.append(n)
         nums = ranked_numeric_names(profile)
         drafts = []
         for cat in cats:
