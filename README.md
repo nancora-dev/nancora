@@ -36,10 +36,14 @@ Scores are ranking heuristics (0–100), not scientific truth. Association is no
 ## Install
 
 ```bash
-pip install -e ".[dev]"
+pip install nancora
 ```
 
-Excel and Parquet extras: `nancora[excel]`, `nancora[parquet]`.
+For development installation:
+
+```bash
+pip install -e ".[dev]"
+```
 
 ## CLI
 
