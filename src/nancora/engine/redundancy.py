@@ -57,7 +57,7 @@ def apply_redundancy(candidates: list[AnalysisCandidate]) -> list[AnalysisCandid
             survivors = [c if c is not prev else cand for c in survivors]
 
     active = [c for c in survivors if c.status == AnalysisStatus.SELECTED]
-    active.sort(key=lambda c: (-(c.score or 0), c.analysis_id, c.variables))
+    active.sort(key=lambda c: (-(c.score or 0), 0 if c.analysis_id == "target_aware" else 1, c.analysis_id, c.variables))
 
     for i, cand in enumerate(active):
         for other in active[:i]:
