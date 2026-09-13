@@ -28,7 +28,7 @@ class CategoricalNumeric(Analysis):
     family = "cat_num_pair"
     requirements = AnalysisRequirements(
         min_rows=5,
-        column_kinds=(ColumnKind.CATEGORICAL, ColumnKind.NUMERIC),
+        column_kinds=(ColumnKind.CATEGORICAL, ColumnKind.BOOLEAN, ColumnKind.NUMERIC),
         min_variables=2,
         max_variables=2,
     )
