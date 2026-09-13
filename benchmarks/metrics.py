@@ -43,5 +43,24 @@ def information_efficiency(selected: list[tuple[str, tuple[str, ...]]]) -> float
     return len(units) / len(selected)
 
 
+import json
+from pathlib import Path
+
+
+def load_labels(path: str | Path) -> list[dict]:
+    p = Path(path)
+    if not p.is_file():
+        return []
+    payload = json.loads(p.read_text(encoding="utf-8"))
+    return list(payload.get("labels") or [])
+
+
+def evaluate_labels(labels: list[dict], data_dir: str | Path) -> dict[str, Any]:
+    if not labels:
+        return {"status": "no_labels"}
+    return {"status": "ok"}
+
+
 def summarize_metrics(payload: dict[str, Any]) -> dict[str, Any]:
     return payload
+

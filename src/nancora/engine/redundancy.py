@@ -22,15 +22,17 @@ def apply_redundancy(candidates: list[AnalysisCandidate]) -> list[AnalysisCandid
     valid = [c for c in candidates if c.status != AnalysisStatus.INVALID]
     invalid = [c for c in candidates if c.status == AnalysisStatus.INVALID]
 
+    rejected: list[AnalysisCandidate] = []
     seen_exact: dict[tuple, AnalysisCandidate] = {}
     for cand in valid:
-        key = (cand.analysis_id, cand.canonical_vars())
+        key = (cand.analysis_id, cand.variables)
         prev = seen_exact.get(key)
         if prev is None:
             seen_exact[key] = cand
             continue
         loser, winner = (cand, prev) if (cand.score or 0) <= (prev.score or 0) else (prev, cand)
         _reject(loser, RejectReason.EXACT_DUPLICATE, winner)
+        rejected.append(loser)
         seen_exact[key] = winner
 
     remaining = list(seen_exact.values())
@@ -38,23 +40,21 @@ def apply_redundancy(candidates: list[AnalysisCandidate]) -> list[AnalysisCandid
     seen_sym: dict[tuple, AnalysisCandidate] = {}
     survivors: list[AnalysisCandidate] = []
     for cand in remaining:
-        if cand.status == AnalysisStatus.REJECTED:
-            survivors.append(cand)
-            continue
         key = (cand.analysis_id, _pair_key(cand.variables))
         prev = seen_sym.get(key)
         if prev is None:
             seen_sym[key] = cand
             survivors.append(cand)
             continue
+        loser, winner = (cand, prev) if (cand.score or 0) <= (prev.score or 0) else (prev, cand)
         if cand.variables != prev.variables:
-            loser, winner = (cand, prev) if (cand.score or 0) <= (prev.score or 0) else (prev, cand)
             _reject(loser, RejectReason.SYMMETRIC_DUPLICATE, winner)
-            if winner is cand:
-                seen_sym[key] = cand
-            survivors.append(cand)
         else:
-            survivors.append(cand)
+            _reject(loser, RejectReason.EXACT_DUPLICATE, winner)
+        rejected.append(loser)
+        if winner is cand:
+            seen_sym[key] = cand
+            survivors = [c if c is not prev else cand for c in survivors]
 
     active = [c for c in survivors if c.status == AnalysisStatus.SELECTED]
     active.sort(key=lambda c: (-(c.score or 0), c.analysis_id, c.variables))
@@ -70,7 +70,7 @@ def apply_redundancy(candidates: list[AnalysisCandidate]) -> list[AnalysisCandid
             elif _coverage_overlap(cand, other):
                 _reject(cand, RejectReason.COVERAGE_OVERLAP, other)
 
-    return invalid + survivors
+    return invalid + survivors + rejected
 
 
 def _similar(a: AnalysisCandidate, b: AnalysisCandidate) -> bool:

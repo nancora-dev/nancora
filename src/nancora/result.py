@@ -52,8 +52,6 @@ class AnalysisResult:
     def rejected_candidates(self) -> list[AnalysisCandidate]:
         return list(self.rejected)
 
-    def rejected(self) -> list[AnalysisCandidate]:
-        return self.rejected_candidates()
 
     def visualize(self, backend: str = "matplotlib"):
         if self.frame is None:

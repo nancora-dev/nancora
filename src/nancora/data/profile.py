@@ -20,6 +20,15 @@ class DatasetProfile:
     top_missing: list[tuple[str, float]] = field(default_factory=list)
     target: str | None = None
 
+    @property
+    def n_columns(self) -> int:
+        return self.n_cols
+
+    @property
+    def missing_columns(self) -> list[str]:
+        return [name for name, _ in self.top_missing]
+
+
     def column(self, name: str) -> ColumnSchema | None:
         for col in self.columns:
             if col.name == name:

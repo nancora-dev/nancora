@@ -11,5 +11,5 @@ def test_nan_aware_stats_and_pearson():
     y = np.array([2.0, 4.0, 6.0, 8.0])
     x2 = np.array([1.0, 2.0, 3.0, 4.0])
     pear = ncstats.pearson(x2, y)
-    assert pear["statistic"] > 0.99
+    assert pear["coefficient"] > 0.99
     assert pear["library"].startswith("scipy")

@@ -26,7 +26,7 @@ def strong_vs_noise(n: int = 80) -> pd.DataFrame:
 def test_strong_relationship_ranks_highly():
     result = nc.explore(strong_vs_noise(), max_analyses=10)
     pair_scores = {}
-    for cand in result.selected + result.rejected():
+    for cand in result.selected + result.rejected:
         if cand.analysis_id == "numeric_relationship" and cand.score is not None:
             pair_scores[tuple(sorted(cand.variables))] = cand.score
     assert pair_scores[("x", "y")] > pair_scores[("noise", "x")]
