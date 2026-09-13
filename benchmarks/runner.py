@@ -36,7 +36,7 @@ REDUNDANT_REASONS = {
 
 
 def _key(analysis_id: str, variables: list[str] | tuple[str, ...]) -> tuple[str, tuple[str, ...]]:
-    return analysis_id, tuple(variables)
+    return analysis_id, tuple(sorted(variables))
 
 
 def load_labels(dataset_id: str) -> list[dict]:
