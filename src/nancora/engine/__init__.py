@@ -79,11 +79,21 @@ def run_pipeline(
     )
 
 
-def explore(df: pd.DataFrame, *, max_analyses: int = 10, rng_seed: int = 0) -> AnalysisResult:
-    return run_pipeline(df, target=None, max_analyses=max_analyses, rng_seed=rng_seed)
+def explore(
+    df: pd.DataFrame,
+    target: str | None = None,
+    *,
+    max_analyses: int = 10,
+    rng_seed: int = 0,
+) -> AnalysisResult:
+    return run_pipeline(df, target=target, max_analyses=max_analyses, rng_seed=rng_seed)
 
 
 def analyze(
-    df: pd.DataFrame, *, target: str, max_analyses: int = 10, rng_seed: int = 0
+    df: pd.DataFrame,
+    target: str | None = None,
+    *,
+    max_analyses: int = 10,
+    rng_seed: int = 0,
 ) -> AnalysisResult:
     return run_pipeline(df, target=target, max_analyses=max_analyses, rng_seed=rng_seed)
