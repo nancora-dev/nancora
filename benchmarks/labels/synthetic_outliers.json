@@ -1,0 +1,21 @@
+{
+  "dataset_id": "synthetic_outliers",
+  "description": "Synthetic benchmark dataset with strong outliers",
+  "labels": [
+    {
+      "analysis_id": "outlier_analysis",
+      "variables": ["val"],
+      "kind": "essential"
+    },
+    {
+      "analysis_id": "numeric_distribution",
+      "variables": ["val"],
+      "kind": "useful"
+    },
+    {
+      "analysis_id": "categorical_numeric",
+      "variables": ["group", "val"],
+      "kind": "useful"
+    }
+  ]
+}
