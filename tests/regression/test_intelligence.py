@@ -181,3 +181,11 @@ def test_scenario_15_noisy_dataset():
     assert len(res.selected) <= 10
     # No single analysis should artificially blow up to 95+ score on pure noise
     assert max(c.score for c in res.selected) < 85.0
+
+
+def test_package_version():
+    import nancora
+
+    assert hasattr(nancora, "__version__")
+    assert nancora.__version__ == "0.1.0"
+
