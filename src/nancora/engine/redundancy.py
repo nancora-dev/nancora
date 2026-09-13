@@ -82,7 +82,18 @@ def _similar(a: AnalysisCandidate, b: AnalysisCandidate) -> bool:
     if len(a.variables) == 2 and len(b.variables) == 2:
         return _pair_key(a.variables) == _pair_key(b.variables)
     if len(a.variables) == 1 and len(b.variables) == 1:
-        return a.variables == b.variables
+        if a.variables == b.variables:
+            outlier_cand = (
+                a if a.analysis_id == "outlier_analysis"
+                else (b if b.analysis_id == "outlier_analysis" else None)
+            )
+            if outlier_cand is not None:
+                stats = outlier_cand.evidence.stats if outlier_cand.evidence else {}
+                n_outliers = stats.get("n_outliers", 0)
+                if n_outliers and int(n_outliers) > 0:
+                    return False
+            return True
+        return False
     return False
 
 

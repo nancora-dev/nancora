@@ -8,16 +8,17 @@ from nancora.analysis.base import AnalysisCandidate, AnalysisContext, ScoreBreak
 from nancora.data.profile import DatasetProfile
 
 BASE_RELEVANCE = {
-    "numeric_distribution": 58.0,
-    "categorical_distribution": 56.0,
-    "numeric_relationship": 62.0,
-    "categorical_numeric": 60.0,
-    "datetime_numeric_trend": 61.0,
-    "correlation_analysis": 64.0,
-    "outlier_analysis": 54.0,
-    "missingness_analysis": 70.0,
-    "cardinality_analysis": 50.0,
-    "target_aware": 72.0,
+    # Prior values (documented relative heuristics, NOT statistical probabilities):
+    "target_aware": 72.0,            # High prior: user explicitly requested target analysis
+    "correlation_analysis": 64.0,     # Bivariate correlation matrix overview
+    "numeric_relationship": 62.0,    # Pairwise continuous association
+    "datetime_numeric_trend": 61.0,  # Temporal trend analysis
+    "categorical_numeric": 60.0,     # Group comparison across categories
+    "numeric_distribution": 58.0,    # Univariate continuous summary
+    "categorical_distribution": 56.0, # Univariate categorical summary
+    "outlier_analysis": 54.0,        # Specialized anomaly screen
+    "missingness_analysis": 50.0,    # Data quality screen; evidence shifts score between -25 and +25
+    "cardinality_analysis": 50.0,    # Schema uniqueness / ID screen
 }
 
 
@@ -44,10 +45,17 @@ def _relationship_strength(candidate: AnalysisCandidate) -> float:
             return 0.0
         return min(16.0, 8.0 + 8.0 * (1.0 - min(p, 1.0)))
     if "n_outliers" in stats:
+        n_out = int(_finite(stats.get("n_outliers")))
         rate = _finite(stats.get("outlier_rate"))
-        return min(12.0, 40.0 * rate)
+        if n_out == 0 or rate == 0.0:
+            return -10.0
+        return min(15.0, 4.0 + 50.0 * rate)
     if "n_columns_with_missing" in stats:
-        return min(12.0, 4.0 + 20.0 * _finite(stats.get("cell_missing_rate")))
+        n_missing_cols = int(_finite(stats.get("n_columns_with_missing")))
+        rate = _finite(stats.get("cell_missing_rate"))
+        if n_missing_cols == 0 or rate == 0.0:
+            return -25.0
+        return min(25.0, 5.0 + 100.0 * rate + 2.0 * min(n_missing_cols, 10))
     return 0.0
 
 
@@ -115,10 +123,10 @@ def score_candidate(
             "note": "Boost if the target is involved",
         },
         {
-            "name": "Relationship strength",
+            "name": "Relationship / Evidence strength",
             "delta": round(rel_strength, 1),
             "signed": True,
-            "note": "From measured association; 0 if univariate",
+            "note": "Evidence adjustment based on signal strength or missingness/outlier presence",
         },
         {
             "name": "Information value",
@@ -152,3 +160,4 @@ def score_candidate(
     candidate.breakdown = ScoreBreakdown(items=items, final=total)
     candidate.explanation = candidate.breakdown.format_trace()
     return candidate
+
