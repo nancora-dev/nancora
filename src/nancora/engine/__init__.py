@@ -43,6 +43,19 @@ def run_pipeline(
 ) -> AnalysisResult:
     if df is None or df.empty:
         raise AnalysisError("Cannot analyze an empty DataFrame.")
+
+    if df.columns.has_duplicates or not all(isinstance(c, str) for c in df.columns):
+        df = df.copy()
+        cols = []
+        counts: dict[str, int] = {}
+        for c in df.columns:
+            s = str(c)
+            counts[s] = counts.get(s, 0) + 1
+            cols.append(s if counts[s] == 1 else f"{s}_{counts[s] - 1}")
+        df.columns = pd.Index(cols)
+        if target is not None and target not in df.columns and str(target) in df.columns:
+            target = str(target)
+
     if target is not None and target not in df.columns:
         raise AnalysisError(f"Target column not found: {target}")
 
