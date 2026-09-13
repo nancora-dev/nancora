@@ -77,7 +77,8 @@ def insight_for(candidate: AnalysisCandidate) -> str:
             "(heuristic fence, not a model)."
         )
     if aid == "missingness_analysis":
-        return f"Missingness overview: {stats.get('n_columns_with_missing')} columns have missing values."
+        n_missing = stats.get("n_columns_with_missing")
+        return f"Missingness overview: {n_missing} columns have missing values."
     if aid == "cardinality_analysis":
         return (
             f"Cardinality of {vars_}: {stats.get('n_unique')} unique values "
