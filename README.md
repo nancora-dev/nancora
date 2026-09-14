@@ -1,27 +1,56 @@
 # Nancora
 
-> You bring the data. Nancora brings the analytical direction.
+> Automated data analysis and visualization recommendations for Python.
 
-[![PyPI version](https://img.shields.io/pypi/v/nancora.svg)](https://pypi.org/project/nancora/)
-[![Python Version](https://img.shields.io/pypi/pyversions/nancora.svg)](https://pypi.org/project/nancora/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![CI](https://github.com/nancora/nancora/actions/workflows/ci.yml/badge.svg)](https://github.com/nancora/nancora/actions/workflows/ci.yml)
+Nancora is an open-source Python library designed to systematically guide exploratory data analysis (EDA). Instead of requiring data practitioners to manually write repetitive analysis scripts or wading through hundreds of unguided charts, Nancora profiles a tabular dataset, evaluates candidate statistical analyses based on empirical evidence, suppresses redundant insights, and ranks actionable recommendations paired with visual specifications.
 
-**Nancora** is a Python data-science intelligence layer that determines which analyses are worth your attention.
-
-Rather than flooding data scientists with dozens of arbitrary charts or requiring manual writing of repetitive exploratory scripts, Nancora profiles a dataset, evaluates candidate statistical analyses based on evidence and data quality, deduplicates redundant work, ranks recommendations using an explainable heuristic, and generates actionable reports.
+**Latest release:** `0.1.1`
 
 ---
 
-## What is Nancora?
+## Project Status
 
-When presented with a new dataset, data scientists face an **analytical decision problem**: a dataset with 20 columns supports hundreds of possible summary statistics, correlation pairs, distribution tests, trend checks, and anomaly screens. Most of these analyses yield trivial or uninformative results.
+| Category | Indicator | Details |
+| :--- | :--- | :--- |
+| **Package** | [![PyPI version](https://img.shields.io/pypi/v/nancora.svg)](https://pypi.org/project/nancora/) | Published on PyPI (`nancora`) |
+| **Python** | [![Python Version](https://img.shields.io/pypi/pyversions/nancora.svg)](https://pypi.org/project/nancora/) | Python `>=3.10` (tested on 3.10, 3.11, 3.12) |
+| **License** | [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) | Open Source (MIT License) |
+| **Quality & CI** | [![CI](https://github.com/nancora/nancora/actions/workflows/ci.yml/badge.svg)](https://github.com/nancora/nancora/actions/workflows/ci.yml) | Automated test suite and static analysis |
 
-Existing computational tools (Pandas, NumPy, SciPy) compute whatever statistics you request. Existing plotting libraries (Matplotlib, Plotly) render whatever charts you request. Automated EDA tools often take the "generate everything" approach, rendering massive HTML pages packed with redundant charts.
+---
 
-**Nancora sits on top of the scientific Python ecosystem as an analytical decision layer.** It evaluates candidate analyses before computing or rendering them, prioritizing directions with genuine statistical signal and penalizing uninformative or redundant exploration.
+## Documentation
 
-```
+Nancora includes a comprehensive documentation suite located in the [`docs/`](docs/) directory:
+
+| Documentation | Description | Link |
+| :--- | :--- | :--- |
+| **Index** | Main documentation homepage & navigation | [`docs/index.md`](docs/index.md) |
+| **Quickstart** | Get started with Nancora in minutes | [`docs/quickstart.md`](docs/quickstart.md) |
+| **Installation** | Installation options and requirements | [`docs/installation.md`](docs/installation.md) |
+| **Core Concepts** | Understand Nancora's analysis and scoring workflow | [`docs/core-concepts.md`](docs/core-concepts.md) |
+| **API Reference** | Public API documentation for functions and objects | [`docs/api-reference.md`](docs/api-reference.md) |
+| **Examples** | Practical code examples and workflows | [`docs/examples.md`](docs/examples.md) |
+| **Tutorials** | Step-by-step guides for analysis scenarios | [`docs/tutorials.md`](docs/tutorials.md) |
+| **Architecture** | Internal pipeline design and component architecture | [`docs/architecture.md`](docs/architecture.md) |
+| **Configuration** | Configure exploration parameters and limits | [`docs/configuration.md`](docs/configuration.md) |
+| **Error Handling** | Exception hierarchy and input validation rules | [`docs/error-handling.md`](docs/error-handling.md) |
+| **Compatibility** | Python, Pandas, and environment compatibility | [`docs/compatibility.md`](docs/compatibility.md) |
+| **Changelog** | Version history and release notes | [`docs/changelog.md`](docs/changelog.md) |
+| **Roadmap** | Development roadmap and planned releases | [`docs/roadmap.md`](docs/roadmap.md) |
+| **Contributing** | Guidelines for contributing to Nancora | [`docs/contributing.md`](docs/contributing.md) |
+
+---
+
+## Why Nancora?
+
+When presented with a new tabular dataset, data practitioners encounter an **analytical decision problem**: even a small dataset with 20 columns yields hundreds of candidate summary statistics, correlation pairs, distribution screens, and group comparisons. The vast majority of these candidates yield trivial or redundant findings.
+
+Standard computational libraries (Pandas, SciPy) execute whatever statistical operations you request, and visualization tools (Matplotlib, Plotly) render whatever charts you code. Traditional automated EDA tools often default to rendering monolithic HTML reports containing every possible chart, causing visual overload.
+
+**Nancora acts as an analytical decision layer on top of the scientific Python ecosystem.** It evaluates candidate analyses before computing or rendering them, prioritizing directions with genuine statistical signal while penalizing uninformative or redundant exploration.
+
+```text
 +-------------------------------------------------------------------------------+
 |                             DATA SCIENCE STACK                                |
 +-------------------------------------------------------------------------------+
@@ -31,82 +60,72 @@ Existing computational tools (Pandas, NumPy, SciPy) compute whatever statistics 
 +-------------------------------------------------------------------------------+
 ```
 
----
-
-## Why Nancora?
-
-Traditional exploratory data analysis requires manual trial-and-error:
-
-```
-Traditional EDA Workflow:
-Dataset  ==>  Manually guess analyses  ==>  Write Pandas/SciPy code  ==>  Plot charts  ==>  Filter noise manually
-```
-
-Nancora automates the **selection and prioritization** phase with a transparent, deterministic pipeline:
-
-```mermaid
-graph TD
-    A[Dataset] --> B[Schema Detection & Profiling]
-    B --> C[Candidate Generation]
-    C --> D[Applicability & Validation]
-    D --> E[Statistical Evidence Collection]
-    E --> F[Heuristic Evidence Scoring]
-    F --> G[Redundancy Reduction]
-    G --> H[Coverage Optimization & Ranking]
-    H --> I[Explainable Recommendations]
-    I --> J[Visualization Specs & HTML/JSON Report]
-```
-
 ### Key Differences
 
 | Capability / Focus | Traditional AutoEDA | Nancora |
 | :--- | :--- | :--- |
-| **Primary Goal** | Generate as many charts as possible | Select and rank only high-signal analyses |
-| **Decision Mechanism** | Hardcoded visual templates | Evidence-backed heuristic scoring (0–100) |
-| **Redundancy Control** | Minimal (shows repetitive pairs) | Active family & variable overlap reduction |
-| **Explainability** | None (black-box charts) | Transparent decision traces & score breakdowns |
-| **Target Awareness** | Separate tool or unguided | Guided exploration toward target variables |
-| **Dependencies** | Heavy / LLM wrappers | Lightweight, offline-first, pure Python/Pandas/SciPy |
+| **Primary Goal** | Render all possible charts for every column | Select and rank high-signal candidate analyses |
+| **Decision Mechanism** | Hardcoded visual templates | Evidence-backed 0–100 heuristic scoring |
+| **Redundancy Control** | Minimal (displays repetitive feature pairs) | Active family & variable overlap suppression |
+| **Explainability** | Opaque / implicit chart outputs | Transparent decision traces & mathematical score breakdowns |
+| **Target Awareness** | Separate tool or unguided | Guided exploration toward a designated target variable |
+| **Execution Model** | Heavy dependencies or LLM wrappers | Lightweight, offline-first, pure Python / Pandas / SciPy |
 
 ---
 
-## How Nancora Works
+## Features
 
-Nancora operates as a deterministic 10-stage execution pipeline:
-
-1. **Schema Detection**: Profiles input column data types (`numeric`, `categorical`, `boolean`, `datetime`, `identifier`) and calculates dataset shape and missingness statistics.
-2. **Candidate Generation**: Proposes candidate analyses across univariate, bivariate, temporal, and data-quality categories.
-3. **Applicability Filtering**: Validates dataset requirements (minimum row count, variable count bounds, column type compatibility).
-4. **Evidence Collection**: Runs targeted statistical checks (IQR outlier rates, Pearson/Spearman correlation coefficients, ANOVA/chi-square statistics, uniqueness ratios) to gather empirical evidence.
-5. **Heuristic Scoring**: Combines base heuristic priors with evidence strength, data quality penalties, and sample support into an explainable 0–100 score.
-6. **Redundancy Reduction**: Identifies and suppresses redundant analyses sharing common variable pairs or analytical families.
-7. **Coverage Optimization**: Boosts top candidates that expand coverage to previously unanalyzed columns.
-8. **Ranking & Selection**: Sorts candidates by final score and selects the top $N$ recommendations (default: 10).
-9. **Explanation Synthesis**: Constructs step-by-step decision traces and human-readable evidence summaries.
-10. **Visualization & Reporting**: Emits structured result objects, Matplotlib plot specifications, JSON payloads, or self-contained HTML reports.
+- **Automated Dataset Exploration & Profiling**: Detects statistical column types (`numeric`, `categorical`, `boolean`, `datetime`, `identifier`), shape, and cell missingness rates.
+- **Evidence-Backed Heuristic Scoring**: Evaluates candidate analyses on an explainable 0–100 scale using empirical signals (skewness, correlations, missingness, outlier rates).
+- **Target-Aware Exploration**: Accepts a `target` column parameter to prioritize bivariate and group relationships involving key target variables.
+- **Redundancy Suppression**: Suppresses overlapping candidate analyses that share common variable pairs or analytical families.
+- **Explainable Decision Traces**: Generates mathematical score breakdowns explaining why each candidate analysis was selected or skipped.
+- **Declarative Visualization Specs**: Constructs Matplotlib-ready visual specifications (`hist`, `bar`, `scatter`, `box`, `line`) for top recommendations.
+- **Rich Serialization & Reporting**: Supports Jupyter Notebook HTML summary tables, self-contained static HTML reports, and JSON export.
+- **Command-Line Interface (CLI)**: Includes a built-in terminal CLI (`nancora explore`, `nancora analyze`) with CSV, JSON, Excel, and Parquet file support.
+- **Robust Exception Hierarchy**: Enforces strict input validation (`NancoraError`, `InputError`, `ConfigurationError`, `DataError`, `ReportError`).
+- **Deterministic & Offline-First**: 100% reproducible execution using seedable tie-breaking (`rng_seed`), zero network dependencies, and zero LLM calls.
 
 ---
 
 ## Installation
 
-Install Nancora from PyPI:
+### Standard Installation
+
+Install Nancora from PyPI using `pip`:
 
 ```bash
 pip install nancora
 ```
 
-### Optional Extras
-
-For Excel (`.xlsx`) or Parquet (`.parquet`) file loading support via CLI:
+Alternatively:
 
 ```bash
+python -m pip install nancora
+```
+
+### Python Version Support
+
+Nancora requires **Python 3.10 or higher**. It is tested and validated against:
+- Python 3.10
+- Python 3.11
+- Python 3.12
+
+### Optional File Format Extras
+
+To enable additional file format readers in the CLI or IO module:
+
+```bash
+# Excel (.xlsx) file support
 pip install "nancora[excel]"
+
+# Parquet (.parquet) file support
 pip install "nancora[parquet]"
 ```
 
 ### Development Installation
 
-To clone and install Nancora locally with testing dependencies:
+To install Nancora locally for development and testing:
 
 ```bash
 git clone https://github.com/nancora/nancora.git
@@ -116,290 +135,269 @@ pip install -e ".[dev]"
 
 ---
 
-## Quick Start
+## Quickstart
 
-### 1. Unsupervised Exploration
+### 1. Unsupervised Dataset Exploration
 
-Pass any Pandas `DataFrame` to `nc.explore()` to discover the most valuable analytical directions:
+Pass any Pandas `DataFrame` to `nancora.explore()` to discover key analytical directions:
 
 ```python
 import pandas as pd
 import nancora as nc
 
+# 1. Create or load a dataset
 df = pd.DataFrame({
     "age": [21, 25, 31, 42, 55, 62, 29, 35],
     "income": [25000, 35000, 50000, 70000, 90000, 115000, 48000, 62000],
     "city": ["Surat", "Surat", "Mumbai", "Delhi", "Mumbai", "Delhi", "Surat", "Mumbai"],
 })
 
-# Explore dataset
+# 2. Run automated dataset exploration
 result = nc.explore(df)
 
-# Print recommendations summary
+# 3. Print recommendations summary
 print(result)
 ```
 
-In a **Jupyter Notebook**, simply evaluating `result` renders a rich, interactive HTML summary table directly in your notebook output cell.
+In a **Jupyter Notebook**, evaluating `result` automatically renders an interactive HTML summary table in the cell output.
 
-### 2. Target-Aware Exploration
+### 2. Target-Aware Exploration & Report Export
 
-If you have a primary variable of interest (e.g., customer churn, sales amount, diagnostic outcome), specify `target`:
-
-```python
-result = nc.explore(df, target="income")
-```
-
-Nancora prioritizes candidate analyses that investigate relationships between features and the target variable.
-
----
-
-## Core Features
-
-* **Automatic Dataset Profiling**: Detects statistical data types, missing rates, duplicate rows, and column cardinality.
-* **Evidence-Backed Scoring**: Evaluates candidate analyses on a 0–100 score scale using empirical statistics.
-* **Target-Aware Analysis**: Adjusts priors to focus on bivariate and group relationships involving a designated target column.
-* **Redundancy Suppression**: Prevents output bloat by suppressing overlapping candidate analyses.
-* **Explainable Recommendations**: Provides full mathematical score breakdowns explaining why each analysis was selected or skipped.
-* **Automatic Plot Specification**: Generates Matplotlib-ready visual specs (`hist`, `bar`, `scatter`, `box`, `line`) for top-ranked recommendations.
-* **HTML & JSON Export**: Export reports to standalone HTML files or serialize results to structured JSON.
-* **Command-Line Interface (CLI)**: Profile datasets and generate reports directly from the terminal.
-* **Deterministic & Offline-First**: No network dependencies, no external APIs, and no non-deterministic LLM output.
-
----
-
-## Analysis Capabilities
-
-Nancora evaluates ten built-in analysis families across dataset, univariate, bivariate, and target-focused categories:
-
-| Analysis ID | Type | Target Requirements | Description & Evidence Used | Visual Spec |
-| :--- | :--- | :--- | :--- | :--- |
-| `missingness_analysis` | Dataset | Any | Analyzes cell missing rates across columns. Penalized (-25) when missingness is 0%. | Bar chart |
-| `cardinality_analysis` | Univariate | Any | Detects high uniqueness ratios and primary key candidates. | Bar chart |
-| `numeric_distribution` | Univariate | Numeric | Analyzes skewness, kurtosis, mean, and standard deviation. | Histogram |
-| `categorical_distribution` | Univariate | Categorical / Boolean | Measures class balance and level frequency distributions. | Bar chart |
-| `outlier_analysis` | Univariate | Numeric (N >= 8) | Screens for extreme values using Interquartile Range (IQR) bounds. | Histogram |
-| `correlation_analysis` | Bivariate | Numeric | Computes pairwise Pearson correlation coefficients ($r$). | Scatter / Heatmap |
-| `numeric_relationship` | Bivariate | Numeric | Evaluates continuous association between numerical pairs. | Scatter plot |
-| `categorical_numeric` | Bivariate | Categorical + Numeric | Compares numeric distributions across categories (ANOVA / group stats). | Box plot |
-| `datetime_numeric_trend` | Bivariate | Datetime + Numeric | Analyzes temporal trends and time-series progressions. | Line chart |
-| `target_aware` | Bivariate | Requires Target | Directly screens features against a specified target column. | Scatter / Box / Bar |
-
----
-
-## Explainable Recommendations
-
-Every recommendation returned by Nancora includes a structured decision trace and score breakdown.
+If you have a primary variable of interest (e.g., customer churn, sales amount, diagnostic result), specify `target`:
 
 ```python
-# Access top recommendation
-rec = result.recommendations[0]
+import nancora as nc
 
-print(f"Analysis: {rec.analysis_id}")
-print(f"Variables: {rec.variables}")
-print(f"Score: {rec.score}")
-print(f"Explanation:\n{rec.explanation}")
+# Load dataset using Nancora IO helper
+df = nc.read_csv("customer_data.csv")
+
+# Run target-aware exploration focused on "income"
+result = nc.explore(df, target="income", max_analyses=5)
+
+# Inspect human-readable evidence insights
+for insight in result.insights:
+    print(f"• {insight}")
+
+# Save self-contained HTML report to disk
+result.save("income_analysis_report.html")
 ```
 
-Example Explanation Output:
+---
+
+## How It Works
+
+Nancora processes datasets through a deterministic 10-stage execution pipeline:
 
 ```text
-Base relevance: +64.0 (Heuristic prior for correlation_analysis)
-Target proximity: +0.0 (No target specified)
-Relationship / Evidence strength: +16.2 (Strong correlation coefficient r = 0.81)
-Information value: +2.1 (Sample size N = 8)
-Data quality: +2.0 (Zero missing values)
-Coverage: +2.0 (Covers new column 'income')
-Complexity: -0.0 (Pairwise analysis penalty)
-----------------------------------------
-Final score: 86.3
+Dataset Input
+      │
+      ▼
+1. Schema Detection & Data Profiling
+      │
+      ▼
+2. Candidate Analysis Generation
+      │
+      ▼
+3. Applicability & Constraint Validation
+      │
+      ▼
+4. Empirical Evidence Collection
+      │
+      ▼
+5. Heuristic Score Computation (0–100 Scale)
+      │
+      ▼
+6. Redundancy Suppression & Overlap Control
+      │
+      ▼
+7. Coverage Optimization & Target Proximity Boost
+      │
+      ▼
+8. Candidate Ranking & Top-N Selection
+      │
+      ▼
+9. Explanation Synthesis & Trace Audit
+      │
+      ▼
+10. Visualization Specs & HTML/JSON Report Output
 ```
 
----
+### Stage Summary
 
-## Scoring and Ranking
-
-Nancora scores candidates on a 0–100 scale using seven component factors:
-
-$$\text{Score} = \text{Base Prior} + \text{Target Proximity} + \text{Evidence Strength} + \text{Information Value} + \text{Data Quality} + \text{Coverage Boost} + \text{Complexity Penalty}$$
-
-1. **Base Relevance Prior**: Initial prior for the analysis type (e.g., `target_aware`: 78.0, `correlation_analysis`: 64.0, `missingness_analysis`: 50.0).
-2. **Target Proximity**: $+14.0$ boost if candidate involves the designated target variable.
-3. **Relationship / Evidence Strength**: Dynamic shift based on empirical signal strength (e.g., correlation coefficient $r$, IQR outlier rate, missingness severity). Zero-missingness receives a $-25.0$ penalty.
-4. **Information Value**: Evaluates sample support ($\log_{10} N$) and penalizes degenerate distributions (zero variance or near-100% unique strings).
-5. **Data Quality**: Penalizes high missing rates in candidate columns.
-6. **Coverage Boost**: $+2.0$ boost awarded to candidate analyses that introduce previously unrepresented columns into the top recommendation set.
-7. **Complexity Penalty**: Small penalty applied to multi-variable or high-complexity analyses.
-
-> **Disclaimer**: Nancora's scores are explainable ranking heuristics (0–100) designed to prioritize exploratory attention. They are not statistical hypothesis tests or claims of causation. *Correlation does not imply causation.*
+1. **Schema Detection**: Identifies column types (`numeric`, `categorical`, `boolean`, `datetime`, `identifier`) and dataset shape.
+2. **Candidate Generation**: Proposes candidate analyses across dataset, univariate, bivariate, and target-focused categories.
+3. **Applicability Validation**: Verifies minimum row thresholds, column compatibility, and dataset bounds.
+4. **Evidence Collection**: Runs empirical statistical checks (IQR outlier ratios, Pearson correlation $r$, ANOVA group statistics).
+5. **Heuristic Scoring**: Combines base priors, target proximity, statistical evidence, and data quality into an explainable 0–100 score.
+6. **Redundancy Reduction**: Suppresses redundant candidate analyses sharing overlapping variable pairs or families.
+7. **Coverage Optimization**: Awards coverage boosts to top candidates that introduce previously unrepresented columns.
+8. **Ranking & Selection**: Sorts candidates by final score and selects the top $N$ recommendations (default: 10).
+9. **Explanation Synthesis**: Builds human-readable evidence summaries and mathematical decision traces.
+10. **Visualization & Reporting**: Emits `AnalysisResult` containers, Matplotlib visual specifications, JSON payloads, or self-contained HTML reports.
 
 ---
 
-## Results and Serialization
+## Examples
 
-The `AnalysisResult` object returned by `nc.explore()` provides clean properties and export methods:
+Runnable example scripts and notebooks are available in the [`examples/`](examples/) directory:
+
+| Example Script | Description | Link |
+| :--- | :--- | :--- |
+| `basic_exploration.py` | Basic unsupervised dataset exploration workflow | [`examples/basic_exploration.py`](examples/basic_exploration.py) |
+| `target_analysis.py` | Target-aware exploration focused on a key column | [`examples/target_analysis.py`](examples/target_analysis.py) |
+| `file_loading.py` | Loading datasets from CSV, Excel, Parquet, and JSON | [`examples/file_loading.py`](examples/file_loading.py) |
+| `mvp_acceptance.py` | Full pipeline acceptance workflow and report generation | [`examples/mvp_acceptance.py`](examples/mvp_acceptance.py) |
+| `nancora_quickstart.ipynb` | Interactive Jupyter Notebook quickstart tutorial | [`examples/nancora_quickstart.ipynb`](examples/nancora_quickstart.ipynb) |
+
+---
+
+## Supported Analysis & Visualization Capabilities
+
+Nancora evaluates ten built-in analysis families in release `0.1.1`:
+
+| Capability / Analysis ID | Category | Target Requirement | Description & Evidence Evaluated | Visual Spec | Status |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| `missingness_analysis` | Dataset | Any | Analyzes cell missing rates across columns. Penalized (-25) when missingness is 0%. | Bar chart | Available |
+| `cardinality_analysis` | Univariate | Any | Detects high uniqueness ratios and primary key candidates. | Bar chart | Available |
+| `numeric_distribution` | Univariate | Continuous | Analyzes skewness, kurtosis, mean, and standard deviation. | Histogram | Available |
+| `categorical_distribution` | Univariate | Discrete | Measures class balance and frequency distributions across levels. | Bar chart | Available |
+| `outlier_analysis` | Univariate | Continuous ($N \ge 8$) | Screens continuous variables for extreme values using IQR bounds. | Histogram | Available |
+| `correlation_analysis` | Bivariate | Continuous pairs | Computes pairwise Pearson correlation coefficients ($r$). | Scatter / Heatmap | Available |
+| `numeric_relationship` | Bivariate | Continuous pairs | Evaluates continuous association between numerical column pairs. | Scatter plot | Available |
+| `categorical_numeric` | Bivariate | Categorical + Continuous | Compares numeric distributions across category levels (ANOVA / group stats). | Box plot | Available |
+| `datetime_numeric_trend` | Bivariate | Datetime + Continuous | Analyzes temporal trends and time-series progressions. | Line chart | Available |
+| `target_aware` | Bivariate | Target column | Directly screens features against a specified target variable (`target="col"`). | Scatter / Box / Bar | Available |
+
+---
+
+## Configuration
+
+Nancora provides explicit configuration parameters for pipeline exploration:
 
 ```python
-result = nc.explore(df)
+import nancora as nc
 
-# Structured properties
-profile = result.profile              # Dataset shape, column kinds, missingness stats
-recs = result.recommendations         # Prioritized list of selected AnalysisCandidates
-insights = result.insights            # Natural language evidence summaries
-rejected = result.rejected_candidates # Candidates skipped due to low score or redundancy
-trace = result.decision_trace         # Complete decision audit dictionary
+result = nc.explore(
+    df,
+    target="income",    # Primary column of interest (default: None)
+    max_analyses=5,     # Maximum recommendations returned (default: 10, must be >= 1)
+    rng_seed=42,        # Random seed for reproducible tie-breaking (default: 0)
+)
+```
 
-# Export formats
-json_data = result.to_json(indent=2)  # Machine-readable JSON string
-dict_data = result.to_dict()          # Python dictionary representation
-result.save("report.html")            # Standalone, self-contained HTML report file
+| Parameter | Type | Default | Description |
+| :--- | :--- | :--- | :--- |
+| `df` | `pd.DataFrame` | *Required* | Input pandas DataFrame to analyze. Must be non-empty ($N \ge 1$). |
+| `target` | `str \| None` | `None` | Optional target column name for target-aware exploration. |
+| `max_analyses` | `int` | `10` | Maximum number of top recommendations returned in `result.recommendations`. |
+| `rng_seed` | `int` | `0` | Seed used for deterministic ranking tie-breaking. |
+
+---
+
+## Error Handling
+
+Nancora provides a clean exception hierarchy for input validation and diagnostic reporting. All custom exceptions derive from `NancoraError`:
+
+```text
+NancoraError (base library exception)
+├── AnalysisError
+│   ├── InputError (raised on invalid DataFrames, missing target columns, or bad types)
+│   └── ConfigurationError (raised when max_analyses < 1 or parameters out of bounds)
+├── DataError (raised on dataset profiling or IO loading failures)
+└── ReportError (raised on HTML report generation or file writing failures)
+```
+
+### Exception Usage Example
+
+```python
+import pandas as pd
+import nancora as nc
+
+try:
+    # Attempt exploration with non-existent target column
+    result = nc.explore(df, target="non_existent_column")
+except nc.InputError as err:
+    print(f"Input validation error: {err}")
+except nc.ConfigurationError as err:
+    print(f"Configuration error: {err}")
+except nc.NancoraError as err:
+    print(f"Nancora error: {err}")
 ```
 
 ---
 
 ## Command-Line Interface (CLI)
 
-Nancora includes a built-in command-line tool for exploring datasets directly from the terminal.
+Nancora includes a built-in terminal CLI (`nancora`) built with Typer:
 
-### Unsupervised Exploration
+### Terminal Usage
 
 ```bash
+# Basic exploration of a CSV file
 nancora explore data.csv --out report.html
-```
 
-### Target-Aware Analysis
-
-```bash
+# Target-aware exploration focusing on "churn_status"
 nancora analyze data.csv --target churn_status --out report.html
-```
 
-### JSON Output to Stdout
-
-```bash
+# Output JSON summary payload to stdout
 nancora explore data.csv --json
 ```
 
 ---
 
-## End-to-End Example
+## Development & Contributing
 
-```python
-import pandas as pd
-import nancora as nc
+We welcome community contributions, bug reports, feature proposals, and documentation improvements!
 
-# 1. Load dataset using Nancora IO helper or Pandas
-df = nc.read_csv("telecom_churn.csv")
+### Development Environment Setup
 
-# 2. Run target-aware exploration focused on "churn"
-result = nc.explore(df, target="churn", max_analyses=5)
+1. Fork and clone the repository:
+   ```bash
+   git clone https://github.com/nancora/nancora.git
+   cd nancora
+   ```
 
-# 3. Print human-readable insights
-print("--- Key Insights ---")
-for insight in result.insights:
-    print(f"• {insight}")
+2. Create a virtual environment and install development dependencies:
+   ```bash
+   python -m venv .venv
+   source .venv/bin/activate  # On Windows: .venv\Scripts\activate
+   pip install -e ".[dev]"
+   ```
 
-# 4. Save interactive HTML report
-result.save("churn_exploration_report.html")
-print("Report saved to churn_exploration_report.html")
-```
+3. Run the automated test suite:
+   ```bash
+   pytest
+   ```
 
----
+4. Run the intelligence benchmark harness:
+   ```bash
+   python -m benchmarks.runner
+   ```
 
-## Architecture Overview
+5. Run static analysis and linting:
+   ```bash
+   ruff check src tests
+   mypy src
+   ```
 
-```text
-src/nancora/
-├── __init__.py           # Top-level API exports (explore, analyze, read_csv)
-├── cli.py                # Typer-based command-line interface
-├── types.py              # Enums (ColumnKind, AnalysisStatus, RejectReason)
-├── data/
-│   ├── io.py             # File loaders (CSV, Excel, Parquet, JSON)
-│   ├── profile.py        # Schema detection & dataset profiling
-│   └── schema.py         # ColumnKind classification rules
-├── analysis/
-│   ├── base.py           # AnalysisCandidate, Evidence, & ScoreBreakdown models
-│   ├── registry.py       # Analysis registration & lookup registry
-│   └── builtin/          # 10 built-in analysis candidate generators & evidence logic
-├── engine/
-│   ├── __init__.py       # Exploration pipeline orchestrator (run_pipeline)
-│   ├── generate.py       # Candidate generator engine
-│   ├── validate.py       # Applicability validator
-│   ├── score.py          # Heuristic scoring engine
-│   ├── redundancy.py     # Redundancy suppression filter
-│   └── rank.py           # Ranking & coverage-based selection algorithm
-├── plot/
-│   ├── spec.py           # Declarative PlotSpec definition
-│   └── render.py         # Matplotlib rendering engine
-├── report/
-│   └── html.py           # Self-contained Jinja2 HTML report generator
-└── result.py             # AnalysisResult output container & Jupyter HTML representation
-```
+For detailed contribution guidelines, please review [`CONTRIBUTING.md`](CONTRIBUTING.md) or [`docs/contributing.md`](docs/contributing.md).
 
 ---
 
-## Ecosystem Comparison
+## Project Roadmap
 
-| Tool | Focus & Purpose | How Nancora Differs |
-| :--- | :--- | :--- |
-| **Pandas / NumPy** | Data manipulation and numerical calculation | Nancora uses Pandas for calculation, but decides *which* calculations to run. |
-| **SciPy** | Scientific and statistical computation routines | Nancora invokes statistical routines to gather evidence for ranking analyses. |
-| **Matplotlib / Plotly**| Graphical chart rendering | Nancora specifies *what* chart is appropriate; Matplotlib handles rendering. |
-| **Sweetviz / AutoViz** | Automated EDA report generators | Sweetviz renders fixed templates for every column; Nancora ranks and selects high-signal analyses. |
-
----
-
-## Design Principles
-
-1. **Evidence over Arbitrary Recommendations**: Analyses are selected based on empirical statistical properties, not static column rules.
-2. **Full Explainability**: Every recommendation includes a complete score trace detailing why it was chosen or skipped.
-3. **Deterministic Execution**: Given the same dataset and parameters, Nancora produces identical, reproducible results every time.
-4. **Offline-First & Lightweight**: Operates locally with zero network calls, zero external API keys, and zero LLM dependencies.
-5. **Ecosystem Respect**: Nancora integrates with Pandas, SciPy, and Matplotlib rather than reinventing them.
+| Release | Focus | Planned / Available Capabilities | Status |
+| :--- | :--- | :--- | :--- |
+| **`v0.1.0` – `v0.1.1`** | **Foundation & Library Quality** | 10 built-in analysis candidate families, 7-factor explainable scoring engine, redundancy control, coverage optimization, Jupyter HTML output, static HTML reports, JSON export, input validation, and Typer CLI. | **Available** |
+| **`v0.2.0`** | **Intelligence Improvements** | Multivariate candidate generators (3+ variable interactions), native interactive Plotly rendering support for HTML reports, and non-linear association metrics (Mutual Information). | Planned |
+| **`v0.3.0`** | **Ecosystem & Customization** | Plugin architecture for custom analysis candidate registration (`@register_analysis`), exportable Jupyter `.ipynb` notebook generation, and file-based heuristic configuration (`nancora.toml`). | Planned |
+| **`v1.0.0`** | **API Stability & Enterprise Polish** | Stable public API guarantee, expanded file connectors, and comprehensive benchmark validation suite. | Future Goal |
 
 ---
 
-## Verification and Quality
+## Project Vision
 
-Nancora v0.1.0 is verified against a comprehensive testing and benchmarking suite:
-
-* **57 Automated Unit & Integration Tests**: Passing across Python 3.10, 3.11, and 3.12 (`pytest`).
-* **Intelligence Regression Suite**: Validated against synthetic and real-world benchmark datasets.
-* **100% Essential Recall**: Achieved across standard benchmark evaluation datasets.
-* **Validated Packages**: Distribution artifacts (`.whl` and `.tar.gz`) verified clean via `twine check`.
-
----
-
-## Roadmap
-
-### Current Version (v0.1.0)
-* 10 built-in analysis families covering univariate, bivariate, dataset, and target-focused exploration.
-* Deterministic scoring, redundancy reduction, and coverage optimization.
-* HTML report generation, JSON serialization, and Matplotlib visualization specs.
-* CLI support for CSV, JSON, Excel, and Parquet files.
-
-### Planned for Future Releases
-* **v0.2.0**: Multivariate analysis candidates (3+ variables, interaction terms).
-* **v0.2.0**: Interactive Plotly backend rendering support for HTML reports.
-* **v0.3.0**: Custom analysis registration plugin system.
-* **v0.3.0**: Exportable Jupyter notebook (`.ipynb`) generation.
-
----
-
-## Development & Testing
-
-To run the full test suite locally:
-
-```bash
-git clone https://github.com/nancora/nancora.git
-cd nancora
-pip install -e ".[dev]"
-pytest
-```
-
-To run the intelligence benchmark harness:
-
-```bash
-python -m benchmarks.runner
-```
+Nancora aims to make exploratory data analysis systematic, reproducible, and transparent for Python data practitioners. By acting as an analytical decision layer between raw data and compute/visualization engines, Nancora provides data scientists with structured guidance without requiring opaque AI models or generating overwhelming visual clutter.
 
 ---
 
@@ -407,6 +405,7 @@ python -m benchmarks.runner
 
 Nancora is open-source software licensed under the [MIT License](LICENSE).
 
----
-
-> You bring the data. Nancora brings the analytical direction.
+```text
+Copyright (c) 2026 Nancora
+Licensed under the MIT License.
+```
