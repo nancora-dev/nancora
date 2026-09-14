@@ -15,9 +15,9 @@ from nancora.exceptions import (
 
 
 def test_version_exposure():
-    """Verify nancora.__version__ exists and equals 0.1.0."""
+    """Verify nancora.__version__ exists and equals 0.1.1."""
     assert hasattr(nc, "__version__")
-    assert nc.__version__ == "0.1.0"
+    assert nc.__version__ == "0.1.1"
 
 
 def test_exception_hierarchy():

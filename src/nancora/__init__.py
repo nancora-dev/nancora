@@ -3,7 +3,7 @@ import importlib.metadata
 try:
     __version__ = importlib.metadata.version("nancora")
 except importlib.metadata.PackageNotFoundError:
-    __version__ = "0.1.0"
+    __version__ = "0.1.1"
 
 from nancora import analysis, data, plot, stats
 from nancora import numeric as numpy
