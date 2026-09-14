@@ -2,6 +2,17 @@
 
 All notable changes to the Nancora library are documented in this file.
 
+## [0.1.1] — Patch Release
+
+### Fixed
+- Standardized custom exception exports (`InputError`, `ConfigurationError`, `DataError`, `AnalysisError`, `ReportError`) directly in `nancora` namespace.
+
+### Improved
+- **Input Validation**: Hardened engine entrypoints (`explore`, `analyze`) with explicit type and argument validation.
+- **Test Coverage**: Added dedicated test suite (`tests/test_validation_and_errors.py`) verifying exception inheritance and invalid input handling.
+- **Documentation**: Added comprehensive documentation portal (`docs/`) covering Quickstart, Core Concepts, Tutorials, API Reference, Error Handling, and Compatibility.
+- **Examples**: Added interactive Jupyter notebook and python scripts in `examples/` demonstrating basic exploration, file loading, and target analysis.
+
 ## [0.1.0] — Initial Release
 
 ### Added
