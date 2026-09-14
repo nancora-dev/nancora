@@ -187,5 +187,5 @@ def test_package_version():
     import nancora
 
     assert hasattr(nancora, "__version__")
-    assert nancora.__version__ == "0.1.0"
+    assert nancora.__version__ == "0.1.1"
 
